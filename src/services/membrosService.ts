@@ -3,11 +3,13 @@ import {
   collection,
   deleteDoc,
   doc,
+  getCountFromServer,
   getDocs,
   orderBy,
   query,
   serverTimestamp,
   updateDoc,
+  where,
 } from "firebase/firestore";
 
 import { db } from "./firebase";
@@ -80,5 +82,45 @@ export async function excluirMembro(
     id
   );
 
-  await deleteDoc(membroRef);
+  await deleteDoc(
+    membroRef
+  );
+}
+
+export async function contarMembrosAtivos():
+  Promise<number> {
+  const consulta = query(
+    membrosRef,
+    where(
+      "status",
+      "==",
+      "ativo"
+    )
+  );
+
+  const resultado =
+    await getCountFromServer(
+      consulta
+    );
+
+  return resultado.data().count;
+}
+
+export async function contarInadimplentes():
+  Promise<number> {
+  const consulta = query(
+    membrosRef,
+    where(
+      "situacaoFinanceira",
+      "==",
+      "pendente"
+    )
+  );
+
+  const resultado =
+    await getCountFromServer(
+      consulta
+    );
+
+  return resultado.data().count;
 }
