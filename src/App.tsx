@@ -25,6 +25,7 @@ import Membros from "./pages/Membros";
 import Financeiro from "./pages/Financeiro";
 import Inadimplencias from "./pages/Inadimplencias";
 import Inventario from "./pages/Inventario";
+import Relatorios from "./pages/Relatorios";
 
 import {
   auth,
@@ -85,7 +86,9 @@ function App() {
                 referencia
               );
 
-            if (!snapshot.exists()) {
+            if (
+              !snapshot.exists()
+            ) {
               setErro(
                 "Usuário sem perfil cadastrado."
               );
@@ -97,7 +100,8 @@ function App() {
               return;
             }
 
-            const dados = snapshot.data() as Usuario;
+            const dados =
+              snapshot.data() as Usuario;
 
             if (!dados.ativo) {
               setErro(
@@ -216,6 +220,17 @@ function App() {
         path="/inventario"
         element={
           <Inventario
+            usuario={
+              usuario
+            }
+          />
+        }
+      />
+
+      <Route
+        path="/relatorios"
+        element={
+          <Relatorios
             usuario={
               usuario
             }

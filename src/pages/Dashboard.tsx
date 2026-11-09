@@ -47,35 +47,40 @@ function Dashboard({
   const [
     membrosAtivos,
     setMembrosAtivos,
-  ] = useState<number | null>(
-    null
-  );
+  ] =
+    useState<number | null>(
+      null
+    );
 
   const [
     inadimplentes,
     setInadimplentes,
-  ] = useState<number | null>(
-    null
-  );
+  ] =
+    useState<number | null>(
+      null
+    );
 
   const [
     saldo,
     setSaldo,
-  ] = useState<number | null>(
-    null
-  );
+  ] =
+    useState<number | null>(
+      null
+    );
 
   const [
     totalInventario,
     setTotalInventario,
-  ] = useState<number | null>(
-    null
-  );
+  ] =
+    useState<number | null>(
+      null
+    );
 
   const [
     erroResumo,
     setErroResumo,
-  ] = useState("");
+  ] =
+    useState("");
 
   function formatarMoeda(
     valor: number
@@ -83,8 +88,11 @@ function Dashboard({
     return new Intl.NumberFormat(
       "pt-BR",
       {
-        style: "currency",
-        currency: "BRL",
+        style:
+          "currency",
+
+        currency:
+          "BRL",
       }
     ).format(valor);
   }
@@ -98,12 +106,16 @@ function Dashboard({
         totalInadimplentes,
         resumoFinanceiro,
         totalItensInventario,
-      ] = await Promise.all([
-        contarMembrosAtivos(),
-        contarMembrosInadimplentes(),
-        calcularResumoFinanceiro(),
-        contarUnidadesInventario(),
-      ]);
+      ] =
+        await Promise.all([
+          contarMembrosAtivos(),
+
+          contarMembrosInadimplentes(),
+
+          calcularResumoFinanceiro(),
+
+          contarUnidadesInventario(),
+        ]);
 
       setMembrosAtivos(
         totalAtivos
@@ -121,7 +133,9 @@ function Dashboard({
         totalItensInventario
       );
     } catch (error) {
-      console.error(error);
+      console.error(
+        error
+      );
 
       setErroResumo(
         "Não foi possível carregar alguns indicadores."
@@ -134,7 +148,9 @@ function Dashboard({
   }, []);
 
   async function sair() {
-    await signOut(auth);
+    await signOut(
+      auth
+    );
   }
 
   return (
@@ -182,7 +198,9 @@ function Dashboard({
 
           <button
             className="logout-button"
-            onClick={sair}
+            onClick={
+              sair
+            }
           >
             Sair
           </button>
@@ -251,16 +269,16 @@ function Dashboard({
               Inventário
             </Link>
 
-            <button
+            <Link
+              to="/relatorios"
               className="nav-item"
-              disabled
             >
               <span>
                 ▤
               </span>
 
               Relatórios
-            </button>
+            </Link>
           </nav>
 
           <div
@@ -407,7 +425,8 @@ function Dashboard({
               <strong
                 style={{
                   color:
-                    saldo !== null &&
+                    saldo !==
+                      null &&
                     saldo < 0
                       ? "#ff453a"
                       : undefined,
@@ -553,6 +572,34 @@ function Dashboard({
 
                     <span>
                       Bens do capítulo
+                    </span>
+                  </div>
+
+                  <span
+                    className="arrow"
+                  >
+                    ›
+                  </span>
+                </Link>
+
+                <Link
+                  to="/relatorios"
+                  className="quick-action"
+                >
+                  <div
+                    className="quick-icon"
+                  >
+                    ▤
+                  </div>
+
+                  <div>
+                    <strong>
+                      Relatórios
+                    </strong>
+
+                    <span>
+                      Visão consolidada
+                      do capítulo
                     </span>
                   </div>
 
