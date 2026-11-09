@@ -27,6 +27,10 @@ import {
   calcularResumoFinanceiro,
 } from "../services/financeiroService";
 
+import {
+  contarUnidadesInventario,
+} from "../services/inventarioService";
+
 import type {
   Usuario,
 } from "../types/Usuario";
@@ -62,6 +66,13 @@ function Dashboard({
   );
 
   const [
+    totalInventario,
+    setTotalInventario,
+  ] = useState<number | null>(
+    null
+  );
+
+  const [
     erroResumo,
     setErroResumo,
   ] = useState("");
@@ -86,10 +97,12 @@ function Dashboard({
         totalAtivos,
         totalInadimplentes,
         resumoFinanceiro,
+        totalItensInventario,
       ] = await Promise.all([
         contarMembrosAtivos(),
         contarMembrosInadimplentes(),
         calcularResumoFinanceiro(),
+        contarUnidadesInventario(),
       ]);
 
       setMembrosAtivos(
@@ -102,6 +115,10 @@ function Dashboard({
 
       setSaldo(
         resumoFinanceiro.saldo
+      );
+
+      setTotalInventario(
+        totalItensInventario
       );
     } catch (error) {
       console.error(error);
@@ -213,26 +230,26 @@ function Dashboard({
             </Link>
 
             <Link
-  to="/inadimplencias"
-  className="nav-item"
->
-  <span>
-    !
-  </span>
-
-  Inadimplências
-</Link>
-
-            <button
+              to="/inadimplencias"
               className="nav-item"
-              disabled
+            >
+              <span>
+                !
+              </span>
+
+              Inadimplências
+            </Link>
+
+            <Link
+              to="/inventario"
+              className="nav-item"
             >
               <span>
                 □
               </span>
 
               Inventário
-            </button>
+            </Link>
 
             <button
               className="nav-item"
@@ -293,9 +310,14 @@ function Dashboard({
           {erroResumo && (
             <p
               style={{
-                marginTop: "18px",
-                color: "#ff453a",
-                fontSize: "12px",
+                marginTop:
+                  "18px",
+
+                color:
+                  "#ff453a",
+
+                fontSize:
+                  "12px",
               }}
             >
               {erroResumo}
@@ -323,7 +345,8 @@ function Dashboard({
               </div>
 
               <strong>
-                {membrosAtivos === null
+                {membrosAtivos ===
+                null
                   ? "..."
                   : membrosAtivos}
               </strong>
@@ -352,14 +375,15 @@ function Dashboard({
               </div>
 
               <strong>
-                {inadimplentes === null
+                {inadimplentes ===
+                null
                   ? "..."
                   : inadimplentes}
               </strong>
 
               <small>
-                Membros com situação
-                financeira pendente
+                Membros com mensalidades
+                vencidas
               </small>
             </article>
 
@@ -397,8 +421,7 @@ function Dashboard({
               </strong>
 
               <small>
-                Entradas menos saídas
-                registradas
+                Tesouraria e Hospitalaria
               </small>
             </article>
 
@@ -420,12 +443,15 @@ function Dashboard({
               </div>
 
               <strong>
-                —
+                {totalInventario ===
+                null
+                  ? "..."
+                  : totalInventario}
               </strong>
 
               <small>
-                Aguardando itens
-                cadastrados
+                Unidades registradas
+                no patrimônio
               </small>
             </article>
           </section>
@@ -471,8 +497,8 @@ function Dashboard({
                     </strong>
 
                     <span>
-                      Cadastrar e
-                      consultar membros
+                      Cadastrar e consultar
+                      membros
                     </span>
                   </div>
 
@@ -510,9 +536,9 @@ function Dashboard({
                   </span>
                 </Link>
 
-                <button
+                <Link
+                  to="/inventario"
                   className="quick-action"
-                  disabled
                 >
                   <div
                     className="quick-icon"
@@ -535,7 +561,7 @@ function Dashboard({
                   >
                     ›
                   </span>
-                </button>
+                </Link>
               </div>
             </article>
 

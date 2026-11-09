@@ -24,6 +24,7 @@ import Dashboard from "./pages/Dashboard";
 import Membros from "./pages/Membros";
 import Financeiro from "./pages/Financeiro";
 import Inadimplencias from "./pages/Inadimplencias";
+import Inventario from "./pages/Inventario";
 
 import {
   auth,
@@ -38,19 +39,22 @@ function App() {
   const [
     usuario,
     setUsuario,
-  ] = useState<Usuario | null>(
-    null
-  );
+  ] =
+    useState<Usuario | null>(
+      null
+    );
 
   const [
     carregando,
     setCarregando,
-  ] = useState(true);
+  ] =
+    useState(true);
 
   const [
     erro,
     setErro,
-  ] = useState("");
+  ] =
+    useState("");
 
   useEffect(() => {
     const unsubscribe =
@@ -86,35 +90,46 @@ function App() {
                 "Usuário sem perfil cadastrado."
               );
 
-              await signOut(auth);
+              await signOut(
+                auth
+              );
 
               return;
             }
 
-            const dados =
-              snapshot.data() as Usuario;
+            const dados = snapshot.data() as Usuario;
 
             if (!dados.ativo) {
               setErro(
                 "Este usuário está desativado."
               );
 
-              await signOut(auth);
+              await signOut(
+                auth
+              );
 
               return;
             }
 
-            setUsuario(dados);
+            setUsuario(
+              dados
+            );
           } catch (error) {
-            console.error(error);
+            console.error(
+              error
+            );
 
             setErro(
               "Não foi possível carregar o usuário."
             );
 
-            setUsuario(null);
+            setUsuario(
+              null
+            );
           } finally {
-            setCarregando(false);
+            setCarregando(
+              false
+            );
           }
         }
       );
@@ -144,7 +159,9 @@ function App() {
   if (!usuario) {
     return (
       <Login
-        mensagemSistema={erro}
+        mensagemSistema={
+          erro
+        }
       />
     );
   }
@@ -155,7 +172,9 @@ function App() {
         path="/"
         element={
           <Dashboard
-            usuario={usuario}
+            usuario={
+              usuario
+            }
           />
         }
       />
@@ -164,7 +183,9 @@ function App() {
         path="/membros"
         element={
           <Membros
-            usuario={usuario}
+            usuario={
+              usuario
+            }
           />
         }
       />
@@ -173,7 +194,9 @@ function App() {
         path="/financeiro"
         element={
           <Financeiro
-            usuario={usuario}
+            usuario={
+              usuario
+            }
           />
         }
       />
@@ -182,7 +205,20 @@ function App() {
         path="/inadimplencias"
         element={
           <Inadimplencias
-            usuario={usuario}
+            usuario={
+              usuario
+            }
+          />
+        }
+      />
+
+      <Route
+        path="/inventario"
+        element={
+          <Inventario
+            usuario={
+              usuario
+            }
           />
         }
       />

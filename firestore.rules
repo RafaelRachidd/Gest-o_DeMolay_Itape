@@ -64,5 +64,18 @@ service cloud.firestore {
       allow delete: if usuarioAtivo()
                     && perfil() == "admin";
     }
+
+    match /inventario/{itemId} {
+      allow read: if usuarioAtivo();
+
+      allow create, update: if usuarioAtivo()
+                            && (
+                              perfil() == "admin"
+                              || perfil() == "patrimonio"
+                            );
+
+      allow delete: if usuarioAtivo()
+                    && perfil() == "admin";
+    }
   }
 }
