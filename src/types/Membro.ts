@@ -3,10 +3,6 @@ export type StatusMembro =
   | "inativo"
   | "senior";
 
-export type SituacaoFinanceira =
-  | "em_dia"
-  | "pendente";
-
 export interface Membro {
   id: string;
 
@@ -21,8 +17,6 @@ export interface Membro {
   oficio: string;
 
   status: StatusMembro;
-
-  situacaoFinanceira: SituacaoFinanceira;
 }
 
 export type NovoMembro =

@@ -5,7 +5,9 @@ import {
   type FormEvent,
 } from "react";
 
-import { Link } from "react-router";
+import {
+  Link,
+} from "react-router";
 
 import {
   cadastrarMembro,
@@ -29,17 +31,17 @@ interface MembrosProps {
   usuario: Usuario;
 }
 
-const membroInicial: NovoMembro = {
-  nomeCompleto: "",
-  email: "",
-  telefone: "",
-  dataNascimento: "",
-  dataIngresso: "",
-  grau: "",
-  oficio: "",
-  status: "ativo",
-  situacaoFinanceira: "em_dia",
-};
+const membroInicial:
+  NovoMembro = {
+    nomeCompleto: "",
+    email: "",
+    telefone: "",
+    dataNascimento: "",
+    dataIngresso: "",
+    grau: "",
+    oficio: "",
+    status: "ativo",
+  };
 
 function Membros({
   usuario,
@@ -47,74 +49,94 @@ function Membros({
   const [
     membros,
     setMembros,
-  ] = useState<Membro[]>([]);
+  ] =
+    useState<Membro[]>(
+      []
+    );
 
   const [
     novoMembro,
     setNovoMembro,
-  ] = useState<NovoMembro>(
-    membroInicial
-  );
+  ] =
+    useState<NovoMembro>(
+      membroInicial
+    );
 
   const [
     membroEditando,
     setMembroEditando,
-  ] = useState<Membro | null>(
-    null
-  );
+  ] =
+    useState<Membro | null>(
+      null
+    );
 
   const [
     excluindoId,
     setExcluindoId,
-  ] = useState<string | null>(
-    null
-  );
+  ] =
+    useState<string | null>(
+      null
+    );
 
   const [
     busca,
     setBusca,
-  ] = useState("");
+  ] =
+    useState("");
 
   const [
     filtroStatus,
     setFiltroStatus,
-  ] = useState("todos");
+  ] =
+    useState(
+      "todos"
+    );
 
   const [
     modalAberto,
     setModalAberto,
-  ] = useState(false);
+  ] =
+    useState(false);
 
   const [
     carregando,
     setCarregando,
-  ] = useState(true);
+  ] =
+    useState(true);
 
   const [
     salvando,
     setSalvando,
-  ] = useState(false);
+  ] =
+    useState(false);
 
   const [
     erro,
     setErro,
-  ] = useState("");
+  ] =
+    useState("");
 
   const [
     sucesso,
     setSucesso,
-  ] = useState("");
+  ] =
+    useState("");
 
   const podeCadastrar =
-    usuario.perfil === "admin" ||
-    usuario.perfil === "secretaria";
+    usuario.perfil ===
+      "admin" ||
+    usuario.perfil ===
+      "secretaria";
 
   const podeEditar =
-    usuario.perfil === "admin" ||
-    usuario.perfil === "secretaria";
+    usuario.perfil ===
+      "admin" ||
+    usuario.perfil ===
+      "secretaria";
 
   const podeExcluir =
-    usuario.perfil === "admin";
+    usuario.perfil ===
+    "admin";
 
   async function carregarMembros() {
     try {
@@ -123,15 +145,21 @@ function Membros({
       const resultado =
         await listarMembros();
 
-      setMembros(resultado);
+      setMembros(
+        resultado
+      );
     } catch (error) {
-      console.error(error);
+      console.error(
+        error
+      );
 
       setErro(
         "Não foi possível carregar os membros."
       );
     } finally {
-      setCarregando(false);
+      setCarregando(
+        false
+      );
     }
   }
 
@@ -144,21 +172,29 @@ function Membros({
       return membros.filter(
         (membro) => {
           const nome =
-            membro.nomeCompleto ?? "";
+            membro.nomeCompleto ??
+            "";
 
           const email =
-            membro.email ?? "";
+            membro.email ??
+            "";
 
           const termo =
-            busca.toLowerCase();
+            busca
+              .toLowerCase()
+              .trim();
 
           const correspondeBusca =
             nome
               .toLowerCase()
-              .includes(termo) ||
+              .includes(
+                termo
+              ) ||
             email
               .toLowerCase()
-              .includes(termo);
+              .includes(
+                termo
+              );
 
           const correspondeStatus =
             filtroStatus ===
@@ -182,25 +218,34 @@ function Membros({
     K extends keyof NovoMembro
   >(
     campo: K,
-    valor: NovoMembro[K]
+    valor:
+      NovoMembro[K]
   ) {
     setNovoMembro(
       (anterior) => ({
         ...anterior,
-        [campo]: valor,
+
+        [campo]:
+          valor,
       })
     );
   }
 
   function abrirNovoMembro() {
-    setMembroEditando(null);
-    setNovoMembro(
-      membroInicial
+    setMembroEditando(
+      null
     );
+
+    setNovoMembro({
+      ...membroInicial,
+    });
 
     setErro("");
     setSucesso("");
-    setModalAberto(true);
+
+    setModalAberto(
+      true
+    );
   }
 
   function abrirEdicao(
@@ -212,44 +257,57 @@ function Membros({
 
     setNovoMembro({
       nomeCompleto:
-        membro.nomeCompleto ?? "",
+        membro.nomeCompleto ??
+        "",
 
       email:
-        membro.email ?? "",
+        membro.email ??
+        "",
 
       telefone:
-        membro.telefone ?? "",
+        membro.telefone ??
+        "",
 
       dataNascimento:
-        membro.dataNascimento ?? "",
+        membro.dataNascimento ??
+        "",
 
       dataIngresso:
-        membro.dataIngresso ?? "",
+        membro.dataIngresso ??
+        "",
 
       grau:
-        membro.grau ?? "",
+        membro.grau ??
+        "",
 
       oficio:
-        membro.oficio ?? "",
+        membro.oficio ??
+        "",
 
       status:
         membro.status,
-
-      situacaoFinanceira:
-        membro.situacaoFinanceira,
     });
 
     setErro("");
     setSucesso("");
-    setModalAberto(true);
+
+    setModalAberto(
+      true
+    );
   }
 
   function fecharModal() {
-    setModalAberto(false);
-    setMembroEditando(null);
-    setNovoMembro(
-      membroInicial
+    setModalAberto(
+      false
     );
+
+    setMembroEditando(
+      null
+    );
+
+    setNovoMembro({
+      ...membroInicial,
+    });
 
     setErro("");
   }
@@ -261,11 +319,16 @@ function Membros({
     event.preventDefault();
 
     try {
-      setSalvando(true);
+      setSalvando(
+        true
+      );
+
       setErro("");
       setSucesso("");
 
-      if (membroEditando) {
+      if (
+        membroEditando
+      ) {
         await editarMembro(
           membroEditando.id,
           novoMembro
@@ -284,9 +347,9 @@ function Membros({
         );
       }
 
-      setNovoMembro(
-        membroInicial
-      );
+      setNovoMembro({
+        ...membroInicial,
+      });
 
       setMembroEditando(
         null
@@ -298,9 +361,13 @@ function Membros({
 
       await carregarMembros();
     } catch (error) {
-      console.error(error);
+      console.error(
+        error
+      );
 
-      if (membroEditando) {
+      if (
+        membroEditando
+      ) {
         setErro(
           "Não foi possível atualizar o membro."
         );
@@ -310,7 +377,9 @@ function Membros({
         );
       }
     } finally {
-      setSalvando(false);
+      setSalvando(
+        false
+      );
     }
   }
 
@@ -322,7 +391,9 @@ function Membros({
         `Deseja realmente excluir ${membro.nomeCompleto}?`
       );
 
-    if (!confirmou) {
+    if (
+      !confirmou
+    ) {
       return;
     }
 
@@ -344,7 +415,9 @@ function Membros({
 
       await carregarMembros();
     } catch (error) {
-      console.error(error);
+      console.error(
+        error
+      );
 
       setErro(
         "Não foi possível excluir o membro."
@@ -359,19 +432,22 @@ function Membros({
   const totalAtivos =
     membros.filter(
       (membro) =>
-        membro.status === "ativo"
+        membro.status ===
+        "ativo"
     ).length;
 
   const totalInativos =
     membros.filter(
       (membro) =>
-        membro.status === "inativo"
+        membro.status ===
+        "inativo"
     ).length;
 
   const totalSeniores =
     membros.filter(
       (membro) =>
-        membro.status === "senior"
+        membro.status ===
+        "senior"
     ).length;
 
   return (
@@ -530,12 +606,16 @@ function Membros({
             <input
               type="search"
               placeholder="Buscar por nome ou e-mail..."
-              value={busca}
+              value={
+                busca
+              }
               onChange={(
                 event
               ) =>
                 setBusca(
-                  event.target.value
+                  event
+                    .target
+                    .value
                 )
               }
             />
@@ -548,7 +628,9 @@ function Membros({
                 event
               ) =>
                 setFiltroStatus(
-                  event.target.value
+                  event
+                    .target
+                    .value
                 )
               }
             >
@@ -585,20 +667,18 @@ function Membros({
               Carregando membros...
             </div>
           ) :
-          membrosFiltrados.length ===
-          0 ? (
+          membrosFiltrados
+            .length === 0 ? (
             <div
               className="membros-empty"
             >
               <strong>
-                Nenhum membro
-                encontrado
+                Nenhum membro encontrado
               </strong>
 
               <p>
-                Cadastre um novo
-                membro ou altere os
-                filtros.
+                Cadastre um novo membro
+                ou altere os filtros.
               </p>
             </div>
           ) : (
@@ -635,10 +715,6 @@ function Membros({
                     </th>
 
                     <th>
-                      Financeiro
-                    </th>
-
-                    <th>
                       Ações
                     </th>
                   </tr>
@@ -655,7 +731,8 @@ function Membros({
                         <td>
                           <strong>
                             {
-                              membro.nomeCompleto
+                              membro
+                                .nomeCompleto
                             }
                           </strong>
                         </td>
@@ -688,22 +765,6 @@ function Membros({
                           >
                             {
                               membro.status
-                            }
-                          </span>
-                        </td>
-
-                        <td>
-                          <span
-                            className={
-                              `financeiro-badge ${membro.situacaoFinanceira}`
-                            }
-                          >
-                            {
-                              membro
-                                .situacaoFinanceira ===
-                              "em_dia"
-                                ? "Em dia"
-                                : "Pendente"
                             }
                           </span>
                         </td>
@@ -816,7 +877,9 @@ function Membros({
                     ) =>
                       alterarCampo(
                         "nomeCompleto",
-                        event.target.value
+                        event
+                          .target
+                          .value
                       )
                     }
                     required
@@ -837,7 +900,9 @@ function Membros({
                     ) =>
                       alterarCampo(
                         "email",
-                        event.target.value
+                        event
+                          .target
+                          .value
                       )
                     }
                   />
@@ -856,7 +921,9 @@ function Membros({
                     ) =>
                       alterarCampo(
                         "telefone",
-                        event.target.value
+                        event
+                          .target
+                          .value
                       )
                     }
                   />
@@ -876,7 +943,9 @@ function Membros({
                     ) =>
                       alterarCampo(
                         "dataNascimento",
-                        event.target.value
+                        event
+                          .target
+                          .value
                       )
                     }
                   />
@@ -896,7 +965,9 @@ function Membros({
                     ) =>
                       alterarCampo(
                         "dataIngresso",
-                        event.target.value
+                        event
+                          .target
+                          .value
                       )
                     }
                   />
@@ -915,7 +986,9 @@ function Membros({
                     ) =>
                       alterarCampo(
                         "grau",
-                        event.target.value
+                        event
+                          .target
+                          .value
                       )
                     }
                     placeholder="Ex.: DeMolay"
@@ -935,7 +1008,9 @@ function Membros({
                     ) =>
                       alterarCampo(
                         "oficio",
-                        event.target.value
+                        event
+                          .target
+                          .value
                       )
                     }
                     placeholder="Ex.: Mestre Conselheiro"
@@ -955,7 +1030,8 @@ function Membros({
                     ) =>
                       alterarCampo(
                         "status",
-                        event.target
+                        event
+                          .target
                           .value as
                           NovoMembro["status"]
                       )
@@ -977,39 +1053,6 @@ function Membros({
                       value="senior"
                     >
                       Sênior
-                    </option>
-                  </select>
-                </label>
-
-                <label>
-                  Situação financeira
-
-                  <select
-                    value={
-                      novoMembro
-                        .situacaoFinanceira
-                    }
-                    onChange={(
-                      event
-                    ) =>
-                      alterarCampo(
-                        "situacaoFinanceira",
-                        event.target
-                          .value as
-                          NovoMembro["situacaoFinanceira"]
-                      )
-                    }
-                  >
-                    <option
-                      value="em_dia"
-                    >
-                      Em dia
-                    </option>
-
-                    <option
-                      value="pendente"
-                    >
-                      Pendente
                     </option>
                   </select>
                 </label>
@@ -1038,8 +1081,8 @@ function Membros({
                   {salvando
                     ? "Salvando..."
                     : membroEditando
-                      ? "Salvar alterações"
-                      : "Cadastrar membro"}
+                    ? "Salvar alterações"
+                    : "Cadastrar membro"}
                 </button>
               </div>
             </form>
