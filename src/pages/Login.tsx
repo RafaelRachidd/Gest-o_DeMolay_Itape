@@ -1,19 +1,51 @@
-import { useState, type FormEvent } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../services/firebase";
+import {
+  useState,
+  type FormEvent,
+} from "react";
+
+import {
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+
+import {
+  auth,
+} from "../services/firebase";
+
+import logoDemolay from "../assets/logo-demolay.png";
+
 import "./Login.css";
 
 interface LoginProps {
   mensagemSistema?: string;
 }
 
-function Login({ mensagemSistema }: LoginProps) {
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [erro, setErro] = useState("");
-  const [carregando, setCarregando] = useState(false);
+function Login({
+  mensagemSistema,
+}: LoginProps) {
+  const [
+    email,
+    setEmail,
+  ] = useState("");
 
-  async function entrar(event: FormEvent<HTMLFormElement>) {
+  const [
+    senha,
+    setSenha,
+  ] = useState("");
+
+  const [
+    erro,
+    setErro,
+  ] = useState("");
+
+  const [
+    carregando,
+    setCarregando,
+  ] = useState(false);
+
+  async function entrar(
+    event:
+      FormEvent<HTMLFormElement>
+  ) {
     event.preventDefault();
 
     setErro("");
@@ -26,26 +58,51 @@ function Login({ mensagemSistema }: LoginProps) {
         senha
       );
     } catch {
-      setErro("E-mail ou senha inválidos.");
+      setErro(
+        "E-mail ou senha inválidos."
+      );
     } finally {
       setCarregando(false);
     }
   }
 
   return (
-    <main className="login-container">
-      <section className="login-card">
-        <span className="login-symbol">△</span>
+    <main
+      className="login-container"
+    >
+      <section
+        className="login-card"
+      >
+        <div
+          className="login-logo-container"
+        >
+          <img
+            src={logoDemolay}
+            alt="Logo da Ordem DeMolay"
+            className="login-logo"
+          />
+        </div>
 
-        <h1>Capítulo Digital</h1>
+        <h1>
+          Capítulo Digital
+        </h1>
 
-        <p className="login-subtitle">
-          Capítulo DeMolay de Itapetininga
+        <p
+          className="login-subtitle"
+        >
+          Capítulo DeMolay de
+          Itapetininga
         </p>
 
-        <form onSubmit={entrar}>
-          <div className="form-group">
-            <label htmlFor="email">
+        <form
+          onSubmit={entrar}
+        >
+          <div
+            className="form-group"
+          >
+            <label
+              htmlFor="email"
+            >
               E-mail
             </label>
 
@@ -53,16 +110,24 @@ function Login({ mensagemSistema }: LoginProps) {
               id="email"
               type="email"
               value={email}
-              onChange={(event) =>
-                setEmail(event.target.value)
+              onChange={(
+                event
+              ) =>
+                setEmail(
+                  event.target.value
+                )
               }
               placeholder="seu@email.com"
               required
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="senha">
+          <div
+            className="form-group"
+          >
+            <label
+              htmlFor="senha"
+            >
               Senha
             </label>
 
@@ -70,24 +135,34 @@ function Login({ mensagemSistema }: LoginProps) {
               id="senha"
               type="password"
               value={senha}
-              onChange={(event) =>
-                setSenha(event.target.value)
+              onChange={(
+                event
+              ) =>
+                setSenha(
+                  event.target.value
+                )
               }
               placeholder="Digite sua senha"
               required
             />
           </div>
 
-          {(erro || mensagemSistema) && (
-            <p className="login-error">
-              {erro || mensagemSistema}
+          {(erro ||
+            mensagemSistema) && (
+            <p
+              className="login-error"
+            >
+              {erro ||
+                mensagemSistema}
             </p>
           )}
 
           <button
             className="login-button"
             type="submit"
-            disabled={carregando}
+            disabled={
+              carregando
+            }
           >
             {carregando
               ? "Entrando..."
@@ -95,8 +170,11 @@ function Login({ mensagemSistema }: LoginProps) {
           </button>
         </form>
 
-        <p className="login-footer">
-          Acesso restrito aos membros autorizados
+        <p
+          className="login-footer"
+        >
+          Acesso restrito aos
+          membros autorizados
         </p>
       </section>
     </main>

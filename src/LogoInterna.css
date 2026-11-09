@@ -1,0 +1,336 @@
+/* =====================================================
+   IDENTIDADE VISUAL - LOGO DEMOLAY NAS TELAS INTERNAS
+   ===================================================== */
+
+/* DASHBOARD
+   Substitui visualmente o triângulo pela logo.
+*/
+
+.brand-symbol {
+  width: 50px !important;
+  height: 50px !important;
+
+  flex-shrink: 0;
+
+  padding: 4px !important;
+
+  font-size: 0 !important;
+  color: transparent !important;
+
+  background:
+    #1c1c1e
+    url("./assets/logo-demolay.png")
+    center / 88%
+    auto
+    no-repeat !important;
+
+  border:
+    1px solid
+    rgba(212, 175, 55, 0.3)
+    !important;
+
+  border-radius: 13px !important;
+
+  box-shadow:
+    0 5px 16px
+    rgba(0, 0, 0, 0.3);
+}
+
+
+/* =====================================================
+   MEMBROS
+   Também substitui o triângulo já existente.
+   ===================================================== */
+
+.membros-logo {
+  width: 50px !important;
+  height: 50px !important;
+
+  flex-shrink: 0;
+
+  padding: 4px !important;
+
+  font-size: 0 !important;
+  color: transparent !important;
+
+  background:
+    #1c1c1e
+    url("./assets/logo-demolay.png")
+    center / 88%
+    auto
+    no-repeat !important;
+
+  border:
+    1px solid
+    rgba(212, 175, 55, 0.3)
+    !important;
+
+  border-radius: 13px !important;
+
+  box-shadow:
+    0 5px 16px
+    rgba(0, 0, 0, 0.3);
+}
+
+
+/* =====================================================
+   FINANCEIRO
+   ===================================================== */
+
+.financeiro-header
+> div:first-child {
+  position: relative;
+
+  min-height: 58px;
+
+  padding-left: 72px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.financeiro-header
+> div:first-child::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  width: 52px;
+  height: 52px;
+
+  background:
+    #1c1c1e
+    url("./assets/logo-demolay.png")
+    center / 88%
+    auto
+    no-repeat;
+
+  border:
+    1px solid
+    rgba(212, 175, 55, 0.3);
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 5px 16px
+    rgba(0, 0, 0, 0.3);
+}
+
+
+/* =====================================================
+   INADIMPLÊNCIAS
+   ===================================================== */
+
+.inadimplencias-header
+> div:first-child {
+  position: relative;
+
+  min-height: 58px;
+
+  padding-left: 72px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.inadimplencias-header
+> div:first-child::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  width: 52px;
+  height: 52px;
+
+  background:
+    #1c1c1e
+    url("./assets/logo-demolay.png")
+    center / 88%
+    auto
+    no-repeat;
+
+  border:
+    1px solid
+    rgba(212, 175, 55, 0.3);
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 5px 16px
+    rgba(0, 0, 0, 0.3);
+}
+
+
+/* =====================================================
+   INVENTÁRIO
+   ===================================================== */
+
+.inventario-header
+> div:first-child {
+  position: relative;
+
+  min-height: 58px;
+
+  padding-left: 72px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.inventario-header
+> div:first-child::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  width: 52px;
+  height: 52px;
+
+  background:
+    #1c1c1e
+    url("./assets/logo-demolay.png")
+    center / 88%
+    auto
+    no-repeat;
+
+  border:
+    1px solid
+    rgba(212, 175, 55, 0.3);
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 5px 16px
+    rgba(0, 0, 0, 0.3);
+}
+
+
+/* =====================================================
+   RELATÓRIOS
+   ===================================================== */
+
+.relatorios-header
+> div:first-child {
+  position: relative;
+
+  min-height: 58px;
+
+  padding-left: 72px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.relatorios-header
+> div:first-child::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  width: 52px;
+  height: 52px;
+
+  background:
+    #1c1c1e
+    url("./assets/logo-demolay.png")
+    center / 88%
+    auto
+    no-repeat;
+
+  border:
+    1px solid
+    rgba(212, 175, 55, 0.3);
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 5px 16px
+    rgba(0, 0, 0, 0.3);
+}
+
+
+/* =====================================================
+   CELULAR
+   ===================================================== */
+
+@media (
+  max-width: 650px
+) {
+  .brand-symbol,
+  .membros-logo {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .financeiro-header
+  > div:first-child,
+
+  .inadimplencias-header
+  > div:first-child,
+
+  .inventario-header
+  > div:first-child,
+
+  .relatorios-header
+  > div:first-child {
+    padding-left: 62px;
+  }
+
+  .financeiro-header
+  > div:first-child::before,
+
+  .inadimplencias-header
+  > div:first-child::before,
+
+  .inventario-header
+  > div:first-child::before,
+
+  .relatorios-header
+  > div:first-child::before {
+    width: 46px;
+    height: 46px;
+  }
+}
+
+
+/* Não imprime a decoração da tela no relatório */
+
+@media print {
+  .relatorios-header
+  > div:first-child {
+    padding-left: 0;
+  }
+
+  .relatorios-header
+  > div:first-child::before {
+    display: none;
+  }
+}

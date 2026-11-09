@@ -36,6 +36,8 @@ import type {
   Usuario,
 } from "./types/Usuario";
 
+import "./LogoInterna.css";
+
 function App() {
   const [
     usuario,
