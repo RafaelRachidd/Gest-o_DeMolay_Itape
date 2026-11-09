@@ -16,9 +16,12 @@ import {
 } from "../services/firebase";
 
 import {
-  contarInadimplentes,
   contarMembrosAtivos,
 } from "../services/membrosService";
+
+import {
+  contarMembrosInadimplentes,
+} from "../services/mensalidadesService";
 
 import {
   calcularResumoFinanceiro,
@@ -85,7 +88,7 @@ function Dashboard({
         resumoFinanceiro,
       ] = await Promise.all([
         contarMembrosAtivos(),
-        contarInadimplentes(),
+        contarMembrosInadimplentes(),
         calcularResumoFinanceiro(),
       ]);
 
@@ -209,16 +212,16 @@ function Dashboard({
               Financeiro
             </Link>
 
-            <button
-              className="nav-item"
-              disabled
-            >
-              <span>
-                !
-              </span>
+            <Link
+  to="/inadimplencias"
+  className="nav-item"
+>
+  <span>
+    !
+  </span>
 
-              Inadimplências
-            </button>
+  Inadimplências
+</Link>
 
             <button
               className="nav-item"

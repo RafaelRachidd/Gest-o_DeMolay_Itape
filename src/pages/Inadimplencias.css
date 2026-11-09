@@ -1,0 +1,479 @@
+.inadimplencias-page {
+  min-height: 100vh;
+  padding: 36px;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(212, 175, 55, 0.08),
+      transparent 30%
+    ),
+    #09090b;
+
+  color: #f5f5f7;
+}
+
+.inadimplencias-header {
+  max-width: 1400px;
+  margin: 0 auto 28px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 24px;
+}
+
+.inadimplencias-header h1 {
+  margin: 0;
+
+  font-size: 32px;
+}
+
+.inadimplencias-eyebrow {
+  margin: 0 0 6px;
+
+  color: #d4af37;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1.4px;
+}
+
+.inadimplencias-subtitle {
+  margin: 8px 0 0;
+
+  color: #8e8e93;
+
+  font-size: 13px;
+}
+
+.inadimplencias-voltar {
+  padding: 11px 15px;
+
+  background: #1c1c1e;
+  color: #f5f5f7;
+
+  border: 1px solid #343438;
+  border-radius: 10px;
+
+  text-decoration: none;
+}
+
+.inadimplencias-resumo {
+  max-width: 1400px;
+  margin: 0 auto 18px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      4,
+      minmax(0, 1fr)
+    );
+
+  gap: 14px;
+}
+
+.inadimplencias-resumo article {
+  min-height: 120px;
+
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background: #151517;
+
+  border: 1px solid #29292c;
+  border-radius: 16px;
+}
+
+.inadimplencias-resumo span {
+  color: #8e8e93;
+
+  font-size: 12px;
+}
+
+.inadimplencias-resumo strong {
+  font-size: 27px;
+}
+
+.vermelho {
+  color: #ff453a !important;
+}
+
+.inadimplencias-card {
+  max-width: 1400px;
+
+  margin: 0 auto 18px;
+
+  padding: 22px;
+
+  background: #151517;
+
+  border: 1px solid #29292c;
+  border-radius: 16px;
+}
+
+.inadimplencias-card-header {
+  margin-bottom: 20px;
+}
+
+.inadimplencias-card-header h2 {
+  margin: 0;
+
+  font-size: 18px;
+}
+
+.inadimplencias-form {
+  display: grid;
+
+  grid-template-columns:
+    2fr 1fr 1fr 1fr auto;
+
+  gap: 14px;
+
+  align-items: end;
+}
+
+.inadimplencias-form label {
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+
+  color: #a1a1a6;
+
+  font-size: 11px;
+}
+
+.inadimplencias-form input,
+.inadimplencias-form select,
+.inadimplencias-filtros input,
+.inadimplencias-filtros select {
+  min-height: 42px;
+
+  padding: 0 13px;
+
+  background: #1c1c1e;
+  color: #f5f5f7;
+
+  border: 1px solid #343438;
+  border-radius: 10px;
+
+  outline: none;
+}
+
+.inadimplencias-form input:focus,
+.inadimplencias-form select:focus,
+.inadimplencias-filtros input:focus,
+.inadimplencias-filtros select:focus {
+  border-color: #d4af37;
+}
+
+.inadimplencias-salvar {
+  min-height: 42px;
+
+  padding: 0 18px;
+
+  background: #d4af37;
+  color: #09090b;
+
+  border: none;
+  border-radius: 10px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.inadimplencias-alerta {
+  max-width: 1400px;
+
+  margin: 0 auto 16px;
+
+  padding: 12px 15px;
+
+  border-radius: 10px;
+
+  font-size: 12px;
+}
+
+.inadimplencias-alerta.erro {
+  color: #ff453a;
+
+  background:
+    rgba(
+      255,
+      69,
+      58,
+      0.08
+    );
+
+  border:
+    1px solid
+    rgba(
+      255,
+      69,
+      58,
+      0.2
+    );
+}
+
+.inadimplencias-alerta.sucesso {
+  color: #30d158;
+
+  background:
+    rgba(
+      48,
+      209,
+      88,
+      0.08
+    );
+
+  border:
+    1px solid
+    rgba(
+      48,
+      209,
+      88,
+      0.2
+    );
+}
+
+.inadimplencias-filtros {
+  display: grid;
+
+  grid-template-columns:
+    1fr 200px;
+
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.inadimplencias-tabela-wrapper {
+  overflow-x: auto;
+}
+
+.inadimplencias-tabela {
+  width: 100%;
+
+  min-width: 1000px;
+
+  border-collapse: collapse;
+}
+
+.inadimplencias-tabela th {
+  padding: 12px;
+
+  color: #636366;
+
+  border-bottom:
+    1px solid #2c2c2e;
+
+  font-size: 10px;
+
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.inadimplencias-tabela td {
+  padding: 15px 12px;
+
+  color: #a1a1a6;
+
+  border-bottom:
+    1px solid #242426;
+
+  font-size: 12px;
+}
+
+.inadimplencias-tabela td strong {
+  color: #f5f5f7;
+}
+
+.mensalidade-status {
+  display: inline-flex;
+
+  padding: 5px 9px;
+
+  border-radius: 100px;
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.mensalidade-status.pago {
+  color: #30d158;
+
+  background:
+    rgba(
+      48,
+      209,
+      88,
+      0.1
+    );
+}
+
+.mensalidade-status.pendente {
+  color: #d4af37;
+
+  background:
+    rgba(
+      212,
+      175,
+      55,
+      0.1
+    );
+}
+
+.mensalidade-status.atrasado {
+  color: #ff453a;
+
+  background:
+    rgba(
+      255,
+      69,
+      58,
+      0.1
+    );
+}
+
+.mensalidade-acoes {
+  display: flex;
+
+  gap: 7px;
+}
+
+.acao-pagar,
+.acao-reabrir,
+.acao-excluir {
+  padding: 7px 10px;
+
+  border-radius: 8px;
+
+  font-size: 10px;
+
+  cursor: pointer;
+}
+
+.acao-pagar {
+  color: #30d158;
+
+  background:
+    rgba(
+      48,
+      209,
+      88,
+      0.08
+    );
+
+  border:
+    1px solid
+    rgba(
+      48,
+      209,
+      88,
+      0.2
+    );
+}
+
+.acao-reabrir {
+  color: #d4af37;
+
+  background:
+    rgba(
+      212,
+      175,
+      55,
+      0.08
+    );
+
+  border:
+    1px solid
+    rgba(
+      212,
+      175,
+      55,
+      0.2
+    );
+}
+
+.acao-excluir {
+  color: #ff453a;
+
+  background:
+    rgba(
+      255,
+      69,
+      58,
+      0.08
+    );
+
+  border:
+    1px solid
+    rgba(
+      255,
+      69,
+      58,
+      0.2
+    );
+}
+
+.inadimplencias-vazio {
+  padding: 70px 20px;
+
+  color: #8e8e93;
+
+  text-align: center;
+}
+
+@media (
+  max-width: 1000px
+) {
+  .inadimplencias-resumo {
+    grid-template-columns:
+      repeat(
+        2,
+        1fr
+      );
+  }
+
+  .inadimplencias-form {
+    grid-template-columns:
+      repeat(
+        2,
+        1fr
+      );
+  }
+}
+
+@media (
+  max-width: 650px
+) {
+  .inadimplencias-page {
+    padding: 20px;
+  }
+
+  .inadimplencias-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .inadimplencias-resumo {
+    grid-template-columns: 1fr;
+  }
+
+  .inadimplencias-form {
+    grid-template-columns: 1fr;
+  }
+
+  .inadimplencias-filtros {
+    grid-template-columns: 1fr;
+  }
+}

@@ -51,5 +51,18 @@ service cloud.firestore {
       allow delete: if usuarioAtivo()
                     && perfil() == "admin";
     }
+
+    match /mensalidades/{mensalidadeId} {
+      allow read: if usuarioAtivo();
+
+      allow create, update: if usuarioAtivo()
+                            && (
+                              perfil() == "admin"
+                              || perfil() == "tesouraria"
+                            );
+
+      allow delete: if usuarioAtivo()
+                    && perfil() == "admin";
+    }
   }
 }

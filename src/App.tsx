@@ -23,6 +23,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Membros from "./pages/Membros";
 import Financeiro from "./pages/Financeiro";
+import Inadimplencias from "./pages/Inadimplencias";
 
 import {
   auth,
@@ -80,16 +81,12 @@ function App() {
                 referencia
               );
 
-            if (
-              !snapshot.exists()
-            ) {
+            if (!snapshot.exists()) {
               setErro(
                 "Usuário sem perfil cadastrado."
               );
 
-              await signOut(
-                auth
-              );
+              await signOut(auth);
 
               return;
             }
@@ -102,9 +99,7 @@ function App() {
                 "Este usuário está desativado."
               );
 
-              await signOut(
-                auth
-              );
+              await signOut(auth);
 
               return;
             }
@@ -149,9 +144,7 @@ function App() {
   if (!usuario) {
     return (
       <Login
-        mensagemSistema={
-          erro
-        }
+        mensagemSistema={erro}
       />
     );
   }
@@ -162,9 +155,7 @@ function App() {
         path="/"
         element={
           <Dashboard
-            usuario={
-              usuario
-            }
+            usuario={usuario}
           />
         }
       />
@@ -173,9 +164,7 @@ function App() {
         path="/membros"
         element={
           <Membros
-            usuario={
-              usuario
-            }
+            usuario={usuario}
           />
         }
       />
@@ -184,9 +173,16 @@ function App() {
         path="/financeiro"
         element={
           <Financeiro
-            usuario={
-              usuario
-            }
+            usuario={usuario}
+          />
+        }
+      />
+
+      <Route
+        path="/inadimplencias"
+        element={
+          <Inadimplencias
+            usuario={usuario}
           />
         }
       />
