@@ -1,10 +1,13 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   getDocs,
   orderBy,
   query,
   serverTimestamp,
+  updateDoc,
 } from "firebase/firestore";
 
 import { db } from "./firebase";
@@ -14,12 +17,13 @@ import type {
   NovoMembro,
 } from "../types/Membro";
 
-const membrosRef =
-  collection(db, "membros");
+const membrosRef = collection(
+  db,
+  "membros"
+);
 
 export async function listarMembros():
   Promise<Membro[]> {
-
   const consulta = query(
     membrosRef,
     orderBy("nomeCompleto")
@@ -46,4 +50,35 @@ export async function cadastrarMembro(
       criadoEm: serverTimestamp(),
     }
   );
+}
+
+export async function editarMembro(
+  id: string,
+  membro: NovoMembro
+) {
+  const membroRef = doc(
+    db,
+    "membros",
+    id
+  );
+
+  await updateDoc(
+    membroRef,
+    {
+      ...membro,
+      atualizadoEm: serverTimestamp(),
+    }
+  );
+}
+
+export async function excluirMembro(
+  id: string
+) {
+  const membroRef = doc(
+    db,
+    "membros",
+    id
+  );
+
+  await deleteDoc(membroRef);
 }
