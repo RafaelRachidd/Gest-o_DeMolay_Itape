@@ -9,8 +9,15 @@ import {
   getDoc,
 } from "firebase/firestore";
 
+import {
+  Navigate,
+  Route,
+  Routes,
+} from "react-router";
+
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import Membros from "./pages/Membros";
 
 import { auth, db } from "./services/firebase";
 
@@ -27,61 +34,60 @@ function App() {
     useState("");
 
   useEffect(() => {
-    const unsubscribe =
-      onAuthStateChanged(
-        auth,
-        async (firebaseUser) => {
-          setErro("");
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      async (firebaseUser) => {
+        setErro("");
 
-          if (!firebaseUser) {
-            setUsuario(null);
-            setCarregando(false);
+        if (!firebaseUser) {
+          setUsuario(null);
+          setCarregando(false);
+          return;
+        }
+
+        try {
+          const usuarioRef = doc(
+            db,
+            "usuarios",
+            firebaseUser.uid
+          );
+
+          const usuarioSnap =
+            await getDoc(usuarioRef);
+
+          if (!usuarioSnap.exists()) {
+            setErro(
+              "Usuário sem perfil cadastrado."
+            );
+
+            await signOut(auth);
             return;
           }
 
-          try {
-            const usuarioRef = doc(
-              db,
-              "usuarios",
-              firebaseUser.uid
-            );
+          const dados =
+            usuarioSnap.data() as Usuario;
 
-            const usuarioSnap =
-              await getDoc(usuarioRef);
-
-            if (!usuarioSnap.exists()) {
-              setErro(
-                "Usuário sem perfil cadastrado."
-              );
-
-              await signOut(auth);
-              return;
-            }
-
-            const dados =
-              usuarioSnap.data() as Usuario;
-
-            if (!dados.ativo) {
-              setErro(
-                "Este usuário está desativado."
-              );
-
-              await signOut(auth);
-              return;
-            }
-
-            setUsuario(dados);
-          } catch {
+          if (!dados.ativo) {
             setErro(
-              "Não foi possível carregar o usuário."
+              "Este usuário está desativado."
             );
 
-            setUsuario(null);
-          } finally {
-            setCarregando(false);
+            await signOut(auth);
+            return;
           }
+
+          setUsuario(dados);
+        } catch {
+          setErro(
+            "Não foi possível carregar o usuário."
+          );
+
+          setUsuario(null);
+        } finally {
+          setCarregando(false);
         }
-      );
+      }
+    );
 
     return () => unsubscribe();
   }, []);
@@ -110,7 +116,26 @@ function App() {
   }
 
   return (
-    <Dashboard usuario={usuario} />
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <Dashboard usuario={usuario} />
+        }
+      />
+
+      <Route
+        path="/membros"
+        element={
+          <Membros usuario={usuario} />
+        }
+      />
+
+      <Route
+        path="*"
+        element={<Navigate to="/" replace />}
+      />
+    </Routes>
   );
 }
 
