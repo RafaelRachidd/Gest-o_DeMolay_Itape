@@ -1,4 +1,8 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
+
 import {
   onAuthStateChanged,
   signOut,
@@ -18,78 +22,111 @@ import {
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Membros from "./pages/Membros";
+import Financeiro from "./pages/Financeiro";
 
-import { auth, db } from "./services/firebase";
+import {
+  auth,
+  db,
+} from "./services/firebase";
 
-import type { Usuario } from "./types/Usuario";
+import type {
+  Usuario,
+} from "./types/Usuario";
 
 function App() {
-  const [usuario, setUsuario] =
-    useState<Usuario | null>(null);
+  const [
+    usuario,
+    setUsuario,
+  ] = useState<Usuario | null>(
+    null
+  );
 
-  const [carregando, setCarregando] =
-    useState(true);
+  const [
+    carregando,
+    setCarregando,
+  ] = useState(true);
 
-  const [erro, setErro] =
-    useState("");
+  const [
+    erro,
+    setErro,
+  ] = useState("");
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(
-      auth,
-      async (firebaseUser) => {
-        setErro("");
+    const unsubscribe =
+      onAuthStateChanged(
+        auth,
+        async (
+          firebaseUser
+        ) => {
+          setErro("");
 
-        if (!firebaseUser) {
-          setUsuario(null);
-          setCarregando(false);
-          return;
-        }
+          if (!firebaseUser) {
+            setUsuario(null);
+            setCarregando(false);
 
-        try {
-          const usuarioRef = doc(
-            db,
-            "usuarios",
-            firebaseUser.uid
-          );
-
-          const usuarioSnap =
-            await getDoc(usuarioRef);
-
-          if (!usuarioSnap.exists()) {
-            setErro(
-              "Usuário sem perfil cadastrado."
-            );
-
-            await signOut(auth);
             return;
           }
 
-          const dados =
-            usuarioSnap.data() as Usuario;
+          try {
+            const referencia =
+              doc(
+                db,
+                "usuarios",
+                firebaseUser.uid
+              );
 
-          if (!dados.ativo) {
+            const snapshot =
+              await getDoc(
+                referencia
+              );
+
+            if (
+              !snapshot.exists()
+            ) {
+              setErro(
+                "Usuário sem perfil cadastrado."
+              );
+
+              await signOut(
+                auth
+              );
+
+              return;
+            }
+
+            const dados =
+              snapshot.data() as Usuario;
+
+            if (!dados.ativo) {
+              setErro(
+                "Este usuário está desativado."
+              );
+
+              await signOut(
+                auth
+              );
+
+              return;
+            }
+
+            setUsuario(dados);
+          } catch (error) {
+            console.error(error);
+
             setErro(
-              "Este usuário está desativado."
+              "Não foi possível carregar o usuário."
             );
 
-            await signOut(auth);
-            return;
+            setUsuario(null);
+          } finally {
+            setCarregando(false);
           }
-
-          setUsuario(dados);
-        } catch {
-          setErro(
-            "Não foi possível carregar o usuário."
-          );
-
-          setUsuario(null);
-        } finally {
-          setCarregando(false);
         }
-      }
-    );
+      );
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   if (carregando) {
@@ -100,7 +137,7 @@ function App() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0b0b0d",
+          background: "#09090b",
           color: "#d4af37",
         }}
       >
@@ -111,7 +148,11 @@ function App() {
 
   if (!usuario) {
     return (
-      <Login mensagemSistema={erro} />
+      <Login
+        mensagemSistema={
+          erro
+        }
+      />
     );
   }
 
@@ -120,20 +161,44 @@ function App() {
       <Route
         path="/"
         element={
-          <Dashboard usuario={usuario} />
+          <Dashboard
+            usuario={
+              usuario
+            }
+          />
         }
       />
 
       <Route
         path="/membros"
         element={
-          <Membros usuario={usuario} />
+          <Membros
+            usuario={
+              usuario
+            }
+          />
+        }
+      />
+
+      <Route
+        path="/financeiro"
+        element={
+          <Financeiro
+            usuario={
+              usuario
+            }
+          />
         }
       />
 
       <Route
         path="*"
-        element={<Navigate to="/" replace />}
+        element={
+          <Navigate
+            to="/"
+            replace
+          />
+        }
       />
     </Routes>
   );

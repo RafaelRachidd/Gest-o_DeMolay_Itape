@@ -20,6 +20,10 @@ import {
   contarMembrosAtivos,
 } from "../services/membrosService";
 
+import {
+  calcularResumoFinanceiro,
+} from "../services/financeiroService";
+
 import type {
   Usuario,
 } from "../types/Usuario";
@@ -48,9 +52,28 @@ function Dashboard({
   );
 
   const [
+    saldo,
+    setSaldo,
+  ] = useState<number | null>(
+    null
+  );
+
+  const [
     erroResumo,
     setErroResumo,
   ] = useState("");
+
+  function formatarMoeda(
+    valor: number
+  ) {
+    return new Intl.NumberFormat(
+      "pt-BR",
+      {
+        style: "currency",
+        currency: "BRL",
+      }
+    ).format(valor);
+  }
 
   async function carregarResumo() {
     try {
@@ -59,9 +82,11 @@ function Dashboard({
       const [
         totalAtivos,
         totalInadimplentes,
+        resumoFinanceiro,
       ] = await Promise.all([
         contarMembrosAtivos(),
         contarInadimplentes(),
+        calcularResumoFinanceiro(),
       ]);
 
       setMembrosAtivos(
@@ -70,6 +95,10 @@ function Dashboard({
 
       setInadimplentes(
         totalInadimplentes
+      );
+
+      setSaldo(
+        resumoFinanceiro.saldo
       );
     } catch (error) {
       console.error(error);
@@ -169,16 +198,16 @@ function Dashboard({
               Membros
             </Link>
 
-            <button
+            <Link
+              to="/financeiro"
               className="nav-item"
-              disabled
             >
               <span>
                 $
               </span>
 
               Financeiro
-            </button>
+            </Link>
 
             <button
               className="nav-item"
@@ -348,13 +377,25 @@ function Dashboard({
                 </div>
               </div>
 
-              <strong>
-                —
+              <strong
+                style={{
+                  color:
+                    saldo !== null &&
+                    saldo < 0
+                      ? "#ff453a"
+                      : undefined,
+                }}
+              >
+                {saldo === null
+                  ? "..."
+                  : formatarMoeda(
+                      saldo
+                    )}
               </strong>
 
               <small>
-                Aguardando módulo
-                financeiro
+                Entradas menos saídas
+                registradas
               </small>
             </article>
 
@@ -439,9 +480,9 @@ function Dashboard({
                   </span>
                 </Link>
 
-                <button
+                <Link
+                  to="/financeiro"
                   className="quick-action"
-                  disabled
                 >
                   <div
                     className="quick-icon"
@@ -464,7 +505,7 @@ function Dashboard({
                   >
                     ›
                   </span>
-                </button>
+                </Link>
 
                 <button
                   className="quick-action"
