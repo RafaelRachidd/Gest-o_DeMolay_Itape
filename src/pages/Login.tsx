@@ -1,22 +1,17 @@
 import { useState, type FormEvent } from "react";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "../services/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../services/firebase";
 import "./Login.css";
 
-interface Usuario {
-  nome: string;
-  email: string;
-  perfil: string;
-  ativo: boolean;
+interface LoginProps {
+  mensagemSistema?: string;
 }
 
-function Login() {
+function Login({ mensagemSistema }: LoginProps) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
   const [carregando, setCarregando] = useState(false);
-  const [usuario, setUsuario] = useState<Usuario | null>(null);
 
   async function entrar(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -25,75 +20,16 @@ function Login() {
     setCarregando(true);
 
     try {
-      const credencial = await signInWithEmailAndPassword(
+      await signInWithEmailAndPassword(
         auth,
         email,
         senha
       );
-
-      const usuarioRef = doc(
-        db,
-        "usuarios",
-        credencial.user.uid
-      );
-
-      const usuarioSnap = await getDoc(usuarioRef);
-
-      if (!usuarioSnap.exists()) {
-        await signOut(auth);
-        setErro("Usuário não possui perfil cadastrado.");
-        return;
-      }
-
-      const dados = usuarioSnap.data() as Usuario;
-
-      if (!dados.ativo) {
-        await signOut(auth);
-        setErro("Este usuário está desativado.");
-        return;
-      }
-
-      setUsuario(dados);
     } catch {
       setErro("E-mail ou senha inválidos.");
     } finally {
       setCarregando(false);
     }
-  }
-
-  async function sair() {
-    await signOut(auth);
-    setUsuario(null);
-    setEmail("");
-    setSenha("");
-  }
-
-  if (usuario) {
-    return (
-      <main className="login-container">
-        <section className="login-card">
-          <span className="login-symbol">△</span>
-
-          <h1>Bem-vindo</h1>
-
-          <p className="login-subtitle">
-            {usuario.nome}
-          </p>
-
-          <div className="usuario-info">
-            <span>Perfil</span>
-            <strong>{usuario.perfil}</strong>
-          </div>
-
-          <button
-            className="login-button"
-            onClick={sair}
-          >
-            Sair
-          </button>
-        </section>
-      </main>
-    );
   }
 
   return (
@@ -142,9 +78,9 @@ function Login() {
             />
           </div>
 
-          {erro && (
+          {(erro || mensagemSistema) && (
             <p className="login-error">
-              {erro}
+              {erro || mensagemSistema}
             </p>
           )}
 
