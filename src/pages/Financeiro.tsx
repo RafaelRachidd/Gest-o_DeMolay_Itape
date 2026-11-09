@@ -5,7 +5,9 @@ import {
   type FormEvent,
 } from "react";
 
-import { Link } from "react-router";
+import {
+  Link,
+} from "react-router";
 
 import {
   cadastrarMovimentacao,
@@ -15,6 +17,7 @@ import {
 } from "../services/financeiroService";
 
 import type {
+  CaixaFinanceiro,
   MovimentacaoFinanceira,
   NovaMovimentacaoFinanceira,
   TipoMovimentacao,
@@ -48,6 +51,14 @@ function Financeiro({
     >([]);
 
   const [
+    caixa,
+    setCaixa,
+  ] =
+    useState<CaixaFinanceiro>(
+      "tesouraria"
+    );
+
+  const [
     tipo,
     setTipo,
   ] =
@@ -65,7 +76,9 @@ function Financeiro({
     categoria,
     setCategoria,
   ] =
-    useState("Mensalidade");
+    useState(
+      "Mensalidade"
+    );
 
   const [
     valor,
@@ -91,7 +104,17 @@ function Financeiro({
     filtroTipo,
     setFiltroTipo,
   ] =
-    useState("todos");
+    useState(
+      "todos"
+    );
+
+  const [
+    filtroCaixa,
+    setFiltroCaixa,
+  ] =
+    useState(
+      "todos"
+    );
 
   const [
     entradas,
@@ -108,6 +131,18 @@ function Financeiro({
   const [
     saldo,
     setSaldo,
+  ] =
+    useState(0);
+
+  const [
+    saldoTesouraria,
+    setSaldoTesouraria,
+  ] =
+    useState(0);
+
+  const [
+    saldoHospitalaria,
+    setSaldoHospitalaria,
   ] =
     useState(0);
 
@@ -136,11 +171,14 @@ function Financeiro({
     useState("");
 
   const podeMovimentar =
-    usuario.perfil === "admin" ||
-    usuario.perfil === "tesouraria";
+    usuario.perfil ===
+      "admin" ||
+    usuario.perfil ===
+      "tesouraria";
 
   const podeExcluir =
-    usuario.perfil === "admin";
+    usuario.perfil ===
+    "admin";
 
   async function carregarDados() {
     try {
@@ -152,10 +190,13 @@ function Financeiro({
       ] =
         await Promise.all([
           listarMovimentacoes(),
+
           calcularResumoFinanceiro(),
         ]);
 
-      setMovimentacoes(lista);
+      setMovimentacoes(
+        lista
+      );
 
       setEntradas(
         resumo.entradas
@@ -168,14 +209,26 @@ function Financeiro({
       setSaldo(
         resumo.saldo
       );
+
+      setSaldoTesouraria(
+        resumo.saldoTesouraria
+      );
+
+      setSaldoHospitalaria(
+        resumo.saldoHospitalaria
+      );
     } catch (error) {
-      console.error(error);
+      console.error(
+        error
+      );
 
       setErro(
         "Não foi possível carregar os dados financeiros."
       );
     } finally {
-      setCarregando(false);
+      setCarregando(
+        false
+      );
     }
   }
 
@@ -191,26 +244,41 @@ function Financeiro({
           .toLowerCase();
 
       return movimentacoes.filter(
-        (movimentacao) => {
+        (
+          movimentacao
+        ) => {
           const correspondeTipo =
             filtroTipo ===
               "todos" ||
             movimentacao.tipo ===
               filtroTipo;
 
+          const correspondeCaixa =
+            filtroCaixa ===
+              "todos" ||
+            movimentacao.caixa ===
+              filtroCaixa;
+
           const correspondeBusca =
             movimentacao.descricao
               .toLowerCase()
-              .includes(termo) ||
+              .includes(
+                termo
+              ) ||
             movimentacao.categoria
               .toLowerCase()
-              .includes(termo) ||
+              .includes(
+                termo
+              ) ||
             movimentacao.responsavel
               .toLowerCase()
-              .includes(termo);
+              .includes(
+                termo
+              );
 
           return (
             correspondeTipo &&
+            correspondeCaixa &&
             correspondeBusca
           );
         }
@@ -219,6 +287,7 @@ function Financeiro({
       movimentacoes,
       busca,
       filtroTipo,
+      filtroCaixa,
     ]);
 
   function formatarMoeda(
@@ -227,10 +296,15 @@ function Financeiro({
     return new Intl.NumberFormat(
       "pt-BR",
       {
-        style: "currency",
-        currency: "BRL",
+        style:
+          "currency",
+
+        currency:
+          "BRL",
       }
-    ).format(numero);
+    ).format(
+      numero
+    );
   }
 
   function formatarData(
@@ -241,7 +315,9 @@ function Financeiro({
       mes,
       dia,
     ] =
-      dataOriginal.split("-");
+      dataOriginal.split(
+        "-"
+      );
 
     if (
       !ano ||
@@ -254,6 +330,20 @@ function Financeiro({
     return `${dia}/${mes}/${ano}`;
   }
 
+  function nomeCaixa(
+    caixaFinanceiro:
+      CaixaFinanceiro
+  ) {
+    if (
+      caixaFinanceiro ===
+      "hospitalaria"
+    ) {
+      return "Hospitalaria";
+    }
+
+    return "Tesouraria";
+  }
+
   async function salvar(
     event:
       FormEvent<HTMLFormElement>
@@ -261,7 +351,9 @@ function Financeiro({
     event.preventDefault();
 
     const valorNumerico =
-      Number(valor);
+      Number(
+        valor
+      );
 
     if (
       !descricao.trim() ||
@@ -277,19 +369,28 @@ function Financeiro({
 
     const novaMovimentacao:
       NovaMovimentacaoFinanceira = {
+        caixa,
+
         tipo,
+
         descricao:
           descricao.trim(),
+
         categoria,
+
         valor:
           valorNumerico,
+
         data,
+
         responsavel:
           usuario.nome,
       };
 
     try {
-      setSalvando(true);
+      setSalvando(
+        true
+      );
 
       setErro("");
       setSucesso("");
@@ -300,12 +401,15 @@ function Financeiro({
 
       setDescricao("");
       setValor("");
+
       setCategoria(
         "Mensalidade"
       );
+
       setTipo(
         "entrada"
       );
+
       setData(
         dataHoje()
       );
@@ -316,13 +420,17 @@ function Financeiro({
 
       await carregarDados();
     } catch (error) {
-      console.error(error);
+      console.error(
+        error
+      );
 
       setErro(
         "Não foi possível registrar a movimentação."
       );
     } finally {
-      setSalvando(false);
+      setSalvando(
+        false
+      );
     }
   }
 
@@ -335,7 +443,9 @@ function Financeiro({
         `Excluir "${movimentacao.descricao}"?`
       );
 
-    if (!confirmou) {
+    if (
+      !confirmou
+    ) {
       return;
     }
 
@@ -353,7 +463,9 @@ function Financeiro({
 
       await carregarDados();
     } catch (error) {
-      console.error(error);
+      console.error(
+        error
+      );
 
       setErro(
         "Não foi possível excluir a movimentação."
@@ -362,10 +474,16 @@ function Financeiro({
   }
 
   return (
-    <main className="financeiro-page">
-      <header className="financeiro-header">
+    <main
+      className="financeiro-page"
+    >
+      <header
+        className="financeiro-header"
+      >
         <div>
-          <p className="financeiro-eyebrow">
+          <p
+            className="financeiro-eyebrow"
+          >
             CAPÍTULO DIGITAL
           </p>
 
@@ -373,9 +491,12 @@ function Financeiro({
             Financeiro
           </h1>
 
-          <p className="financeiro-subtitle">
-            Controle de entradas,
-            saídas e saldo do capítulo.
+          <p
+            className="financeiro-subtitle"
+          >
+            Controle dos caixas
+            da Tesouraria e
+            Hospitalaria.
           </p>
         </div>
 
@@ -387,10 +508,12 @@ function Financeiro({
         </Link>
       </header>
 
-      <section className="financeiro-resumo">
+      <section
+        className="financeiro-resumo"
+      >
         <article>
           <span>
-            Saldo em caixa
+            Saldo total
           </span>
 
           <strong
@@ -408,10 +531,50 @@ function Financeiro({
 
         <article>
           <span>
-            Entradas
+            Caixa Tesouraria
           </span>
 
-          <strong className="entrada-texto">
+          <strong
+            className={
+              saldoTesouraria <
+              0
+                ? "negativo"
+                : ""
+            }
+          >
+            {formatarMoeda(
+              saldoTesouraria
+            )}
+          </strong>
+        </article>
+
+        <article>
+          <span>
+            Caixa Hospitalaria
+          </span>
+
+          <strong
+            className={
+              saldoHospitalaria <
+              0
+                ? "negativo"
+                : ""
+            }
+          >
+            {formatarMoeda(
+              saldoHospitalaria
+            )}
+          </strong>
+        </article>
+
+        <article>
+          <span>
+            Entradas gerais
+          </span>
+
+          <strong
+            className="entrada-texto"
+          >
             {formatarMoeda(
               entradas
             )}
@@ -420,10 +583,12 @@ function Financeiro({
 
         <article>
           <span>
-            Saídas
+            Saídas gerais
           </span>
 
-          <strong className="saida-texto">
+          <strong
+            className="saida-texto"
+          >
             {formatarMoeda(
               saidas
             )}
@@ -432,22 +597,32 @@ function Financeiro({
       </section>
 
       {erro && (
-        <div className="financeiro-alerta erro">
+        <div
+          className="financeiro-alerta erro"
+        >
           {erro}
         </div>
       )}
 
       {sucesso && (
-        <div className="financeiro-alerta sucesso">
+        <div
+          className="financeiro-alerta sucesso"
+        >
           {sucesso}
         </div>
       )}
 
       {podeMovimentar && (
-        <section className="financeiro-card">
-          <div className="financeiro-card-header">
+        <section
+          className="financeiro-card"
+        >
+          <div
+            className="financeiro-card-header"
+          >
             <div>
-              <p className="financeiro-eyebrow">
+              <p
+                className="financeiro-eyebrow"
+              >
                 NOVO REGISTRO
               </p>
 
@@ -459,28 +634,69 @@ function Financeiro({
 
           <form
             className="financeiro-form"
-            onSubmit={salvar}
+            onSubmit={
+              salvar
+            }
           >
+            <label>
+              Caixa
+
+              <select
+                value={
+                  caixa
+                }
+                onChange={(
+                  event
+                ) =>
+                  setCaixa(
+                    event
+                      .target
+                      .value as
+                      CaixaFinanceiro
+                  )
+                }
+              >
+                <option
+                  value="tesouraria"
+                >
+                  Tesouraria
+                </option>
+
+                <option
+                  value="hospitalaria"
+                >
+                  Hospitalaria
+                </option>
+              </select>
+            </label>
+
             <label>
               Tipo
 
               <select
-                value={tipo}
+                value={
+                  tipo
+                }
                 onChange={(
                   event
                 ) =>
                   setTipo(
-                    event.target
+                    event
+                      .target
                       .value as
                       TipoMovimentacao
                   )
                 }
               >
-                <option value="entrada">
+                <option
+                  value="entrada"
+                >
                   Entrada
                 </option>
 
-                <option value="saida">
+                <option
+                  value="saida"
+                >
                   Saída
                 </option>
               </select>
@@ -494,12 +710,16 @@ function Financeiro({
                 min="0.01"
                 step="0.01"
                 placeholder="0,00"
-                value={valor}
+                value={
+                  valor
+                }
                 onChange={(
                   event
                 ) =>
                   setValor(
-                    event.target.value
+                    event
+                      .target
+                      .value
                   )
                 }
                 required
@@ -511,12 +731,16 @@ function Financeiro({
 
               <input
                 type="date"
-                value={data}
+                value={
+                  data
+                }
                 onChange={(
                   event
                 ) =>
                   setData(
-                    event.target.value
+                    event
+                      .target
+                      .value
                   )
                 }
                 required
@@ -534,7 +758,9 @@ function Financeiro({
                   event
                 ) =>
                   setCategoria(
-                    event.target.value
+                    event
+                      .target
+                      .value
                   )
                 }
               >
@@ -568,7 +794,9 @@ function Financeiro({
               </select>
             </label>
 
-            <label className="financeiro-descricao">
+            <label
+              className="financeiro-descricao"
+            >
               Descrição
 
               <input
@@ -581,7 +809,9 @@ function Financeiro({
                   event
                 ) =>
                   setDescricao(
-                    event.target.value
+                    event
+                      .target
+                      .value
                   )
                 }
                 required
@@ -603,10 +833,16 @@ function Financeiro({
         </section>
       )}
 
-      <section className="financeiro-card">
-        <div className="financeiro-card-header">
+      <section
+        className="financeiro-card"
+      >
+        <div
+          className="financeiro-card-header"
+        >
           <div>
-            <p className="financeiro-eyebrow">
+            <p
+              className="financeiro-eyebrow"
+            >
               HISTÓRICO
             </p>
 
@@ -616,19 +852,58 @@ function Financeiro({
           </div>
         </div>
 
-        <div className="financeiro-filtros">
+        <div
+          className="financeiro-filtros"
+        >
           <input
             type="search"
             placeholder="Buscar movimentação..."
-            value={busca}
+            value={
+              busca
+            }
             onChange={(
               event
             ) =>
               setBusca(
-                event.target.value
+                event
+                  .target
+                  .value
               )
             }
           />
+
+          <select
+            value={
+              filtroCaixa
+            }
+            onChange={(
+              event
+            ) =>
+              setFiltroCaixa(
+                event
+                  .target
+                  .value
+              )
+            }
+          >
+            <option
+              value="todos"
+            >
+              Todos os caixas
+            </option>
+
+            <option
+              value="tesouraria"
+            >
+              Tesouraria
+            </option>
+
+            <option
+              value="hospitalaria"
+            >
+              Hospitalaria
+            </option>
+          </select>
 
           <select
             value={
@@ -638,42 +913,62 @@ function Financeiro({
               event
             ) =>
               setFiltroTipo(
-                event.target.value
+                event
+                  .target
+                  .value
               )
             }
           >
-            <option value="todos">
-              Todos
+            <option
+              value="todos"
+            >
+              Todos os tipos
             </option>
 
-            <option value="entrada">
+            <option
+              value="entrada"
+            >
               Entradas
             </option>
 
-            <option value="saida">
+            <option
+              value="saida"
+            >
               Saídas
             </option>
           </select>
         </div>
 
         {carregando ? (
-          <div className="financeiro-vazio">
+          <div
+            className="financeiro-vazio"
+          >
             Carregando...
           </div>
         ) :
         movimentacoesFiltradas
           .length === 0 ? (
-          <div className="financeiro-vazio">
+          <div
+            className="financeiro-vazio"
+          >
             Nenhuma movimentação
             registrada.
           </div>
         ) : (
-          <div className="financeiro-tabela-wrapper">
-            <table className="financeiro-tabela">
+          <div
+            className="financeiro-tabela-wrapper"
+          >
+            <table
+              className="financeiro-tabela"
+            >
               <thead>
                 <tr>
                   <th>
                     Data
+                  </th>
+
+                  <th>
+                    Caixa
                   </th>
 
                   <th>
@@ -719,6 +1014,18 @@ function Financeiro({
                       </td>
 
                       <td>
+                        <span
+                          className={
+                            `caixa-badge ${movimentacao.caixa}`
+                          }
+                        >
+                          {nomeCaixa(
+                            movimentacao.caixa
+                          )}
+                        </span>
+                      </td>
+
+                      <td>
                         <strong>
                           {
                             movimentacao
@@ -741,7 +1048,8 @@ function Financeiro({
                           }
                         >
                           {
-                            movimentacao.tipo
+                            movimentacao
+                              .tipo
                           }
                         </span>
                       </td>

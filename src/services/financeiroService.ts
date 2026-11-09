@@ -9,45 +9,73 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
-import { db } from "./firebase";
+import {
+  db,
+} from "./firebase";
 
 import type {
+  CaixaFinanceiro,
   MovimentacaoFinanceira,
   NovaMovimentacaoFinanceira,
 } from "../types/MovimentacaoFinanceira";
 
-const movimentacoesRef = collection(
-  db,
-  "movimentacoesFinanceiras"
-);
+const movimentacoesRef =
+  collection(
+    db,
+    "movimentacoesFinanceiras"
+  );
 
 export async function listarMovimentacoes():
   Promise<MovimentacaoFinanceira[]> {
 
-  const consulta = query(
-    movimentacoesRef,
-    orderBy("data", "desc")
-  );
+  const consulta =
+    query(
+      movimentacoesRef,
+      orderBy(
+        "data",
+        "desc"
+      )
+    );
 
   const resultado =
-    await getDocs(consulta);
+    await getDocs(
+      consulta
+    );
 
   return resultado.docs.map(
-    (documento) => ({
-      id: documento.id,
-      ...documento.data(),
-    } as MovimentacaoFinanceira)
+    (documento) => {
+      const dados =
+        documento.data();
+
+      const caixa:
+        CaixaFinanceiro =
+          dados.caixa ===
+          "hospitalaria"
+            ? "hospitalaria"
+            : "tesouraria";
+
+      return {
+        id: documento.id,
+
+        ...dados,
+
+        caixa,
+      } as MovimentacaoFinanceira;
+    }
   );
 }
 
 export async function cadastrarMovimentacao(
-  movimentacao: NovaMovimentacaoFinanceira
+  movimentacao:
+    NovaMovimentacaoFinanceira
 ) {
   await addDoc(
     movimentacoesRef,
     {
       ...movimentacao,
-      criadoEm: serverTimestamp(),
+
+      criadoEm:
+        serverTimestamp(),
     }
   );
 }
@@ -55,13 +83,16 @@ export async function cadastrarMovimentacao(
 export async function excluirMovimentacao(
   id: string
 ) {
-  const referencia = doc(
-    db,
-    "movimentacoesFinanceiras",
-    id
-  );
+  const referencia =
+    doc(
+      db,
+      "movimentacoesFinanceiras",
+      id
+    );
 
-  await deleteDoc(referencia);
+  await deleteDoc(
+    referencia
+  );
 }
 
 export async function calcularResumoFinanceiro() {
@@ -73,6 +104,9 @@ export async function calcularResumoFinanceiro() {
   let entradas = 0;
   let saidas = 0;
 
+  let saldoTesouraria = 0;
+  let saldoHospitalaria = 0;
+
   resultado.docs.forEach(
     (documento) => {
       const dados =
@@ -83,11 +117,34 @@ export async function calcularResumoFinanceiro() {
           dados.valor
         ) || 0;
 
+      const caixa:
+        CaixaFinanceiro =
+          dados.caixa ===
+          "hospitalaria"
+            ? "hospitalaria"
+            : "tesouraria";
+
       if (
         dados.tipo ===
         "entrada"
       ) {
         entradas += valor;
+
+        if (
+          caixa ===
+          "tesouraria"
+        ) {
+          saldoTesouraria +=
+            valor;
+        }
+
+        if (
+          caixa ===
+          "hospitalaria"
+        ) {
+          saldoHospitalaria +=
+            valor;
+        }
       }
 
       if (
@@ -95,14 +152,37 @@ export async function calcularResumoFinanceiro() {
         "saida"
       ) {
         saidas += valor;
+
+        if (
+          caixa ===
+          "tesouraria"
+        ) {
+          saldoTesouraria -=
+            valor;
+        }
+
+        if (
+          caixa ===
+          "hospitalaria"
+        ) {
+          saldoHospitalaria -=
+            valor;
+        }
       }
     }
   );
 
   return {
     entradas,
+
     saidas,
+
+    saldoTesouraria,
+
+    saldoHospitalaria,
+
     saldo:
-      entradas - saidas,
+      saldoTesouraria +
+      saldoHospitalaria,
   };
 }

@@ -15,6 +15,7 @@
 
 .financeiro-header {
   max-width: 1400px;
+
   margin: 0 auto 28px;
 
   display: flex;
@@ -72,8 +73,11 @@
 
   grid-template-columns:
     repeat(
-      3,
-      minmax(0, 1fr)
+      auto-fit,
+      minmax(
+        190px,
+        1fr
+      )
     );
 
   gap: 14px;
@@ -103,7 +107,7 @@
 }
 
 .financeiro-resumo strong {
-  font-size: 27px;
+  font-size: 26px;
 }
 
 .entrada-texto {
@@ -200,7 +204,10 @@
   grid-template-columns:
     repeat(
       4,
-      minmax(0, 1fr)
+      minmax(
+        0,
+        1fr
+      )
     );
 
   gap: 14px;
@@ -245,7 +252,7 @@
 
 .financeiro-descricao {
   grid-column:
-    span 3;
+    span 2;
 }
 
 .financeiro-salvar {
@@ -272,15 +279,19 @@
 }
 
 .financeiro-filtros {
-  display: flex;
+  display: grid;
+
+  grid-template-columns:
+    minmax(
+      250px,
+      1fr
+    )
+    190px
+    190px;
 
   gap: 12px;
 
   margin-bottom: 18px;
-}
-
-.financeiro-filtros input {
-  flex: 1;
 }
 
 .financeiro-tabela-wrapper {
@@ -290,7 +301,7 @@
 .financeiro-tabela {
   width: 100%;
 
-  min-width: 950px;
+  min-width: 1080px;
 
   border-collapse: collapse;
 }
@@ -306,6 +317,7 @@
   font-size: 10px;
 
   text-align: left;
+
   text-transform: uppercase;
 }
 
@@ -324,7 +336,8 @@
   color: #f5f5f7;
 }
 
-.financeiro-badge {
+.financeiro-badge,
+.caixa-badge {
   display: inline-flex;
 
   padding: 5px 9px;
@@ -333,7 +346,9 @@
 
   font-size: 10px;
   font-weight: 700;
+}
 
+.financeiro-badge {
   text-transform: capitalize;
 }
 
@@ -357,6 +372,30 @@
       255,
       69,
       58,
+      0.1
+    );
+}
+
+.caixa-badge.tesouraria {
+  color: #d4af37;
+
+  background:
+    rgba(
+      212,
+      175,
+      55,
+      0.1
+    );
+}
+
+.caixa-badge.hospitalaria {
+  color: #64d2ff;
+
+  background:
+    rgba(
+      100,
+      210,
+      255,
       0.1
     );
 }
@@ -397,20 +436,43 @@
 }
 
 @media (
-  max-width: 850px
+  max-width: 950px
+) {
+  .financeiro-form {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(
+          0,
+          1fr
+        )
+      );
+  }
+
+  .financeiro-descricao {
+    grid-column:
+      span 2;
+  }
+
+  .financeiro-filtros {
+    grid-template-columns:
+      1fr;
+  }
+}
+
+@media (
+  max-width: 650px
 ) {
   .financeiro-page {
     padding: 20px;
   }
 
   .financeiro-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+    flex-direction:
+      column;
 
-  .financeiro-resumo {
-    grid-template-columns:
-      1fr;
+    align-items:
+      flex-start;
   }
 
   .financeiro-form {
@@ -419,10 +481,7 @@
   }
 
   .financeiro-descricao {
-    grid-column: auto;
-  }
-
-  .financeiro-filtros {
-    flex-direction: column;
+    grid-column:
+      auto;
   }
 }
