@@ -31,6 +31,9 @@ import {
   contarUnidadesInventario,
 } from "../services/inventarioService";
 
+import AtividadesRecentes
+  from "../components/AtividadesRecentes";
+
 import type {
   Usuario,
 } from "../types/Usuario";
@@ -631,26 +634,7 @@ function Dashboard({
                 </div>
               </div>
 
-              <div
-                className="empty-state"
-              >
-                <div
-                  className="empty-icon"
-                >
-                  ◇
-                </div>
-
-                <strong>
-                  Nenhuma atividade
-                  registrada
-                </strong>
-
-                <p>
-                  As movimentações do
-                  sistema aparecerão
-                  aqui.
-                </p>
-              </div>
+              <AtividadesRecentes />
             </article>
           </section>
         </section>

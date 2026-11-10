@@ -1,0 +1,156 @@
+.atividades-lista {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+
+  margin-top: 14px;
+}
+
+.atividade-item {
+  display: grid;
+
+  grid-template-columns:
+    38px
+    minmax(0, 1fr)
+    auto;
+
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 11px 8px;
+
+  border-bottom:
+    1px solid #242426;
+}
+
+.atividade-item:last-child {
+  border-bottom: none;
+}
+
+.atividade-icone {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    rgba(
+      212,
+      175,
+      55,
+      0.08
+    );
+
+  color: #d4af37;
+
+  border-radius: 10px;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.atividade-icone.financeiro {
+  color: #30d158;
+
+  background:
+    rgba(
+      48,
+      209,
+      88,
+      0.08
+    );
+}
+
+.atividade-icone.mensalidades {
+  color: #ff9f0a;
+
+  background:
+    rgba(
+      255,
+      159,
+      10,
+      0.08
+    );
+}
+
+.atividade-icone.inventario {
+  color: #64d2ff;
+
+  background:
+    rgba(
+      100,
+      210,
+      255,
+      0.08
+    );
+}
+
+.atividade-conteudo {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.atividade-conteudo strong {
+  color: #f5f5f7;
+
+  font-size: 11px;
+}
+
+.atividade-conteudo span {
+  overflow: hidden;
+
+  color: #737378;
+
+  font-size: 10px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.atividade-item small {
+  color: #636366;
+
+  font-size: 9px;
+
+  white-space: nowrap;
+}
+
+.atividades-status {
+  min-height: 210px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #8e8e93;
+
+  font-size: 11px;
+}
+
+.atividades-status.erro {
+  color: #ff453a;
+}
+
+@media (
+  max-width: 520px
+) {
+  .atividade-item {
+    grid-template-columns:
+      36px
+      minmax(0, 1fr);
+  }
+
+  .atividade-item small {
+    grid-column: 2;
+
+    margin-top: -4px;
+  }
+}
