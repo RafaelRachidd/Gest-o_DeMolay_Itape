@@ -1,0 +1,373 @@
+/* =====================================================
+   TEMA CLARO - CAPÍTULO DIGITAL
+   O tema escuro continua sendo o padrão atual.
+   ===================================================== */
+
+html {
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+body {
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+
+/* =====================================================
+   PÁGINAS
+   ===================================================== */
+
+html[data-theme="light"] .dashboard,
+html[data-theme="light"] .membros-page,
+html[data-theme="light"] .financeiro-page,
+html[data-theme="light"] .inadimplencias-page,
+html[data-theme="light"] .inventario-page,
+html[data-theme="light"] .relatorios-page,
+html[data-theme="light"] .login-container {
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(212, 175, 55, 0.09),
+      transparent 30%
+    ),
+    #f4f4f6 !important;
+
+  color: #1c1c1e !important;
+}
+
+
+/* =====================================================
+   HEADER
+   ===================================================== */
+
+html[data-theme="light"] .dashboard-header,
+html[data-theme="light"] .membros-topbar {
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.94
+    ) !important;
+
+  border-color:
+    #dddddf !important;
+}
+
+
+/* =====================================================
+   SIDEBAR
+   ===================================================== */
+
+html[data-theme="light"] .sidebar {
+  background:
+    #ffffff !important;
+
+  border-color:
+    #dddddf !important;
+}
+
+html[data-theme="light"] .nav-item {
+  color:
+    #5f5f64 !important;
+}
+
+html[data-theme="light"] .nav-item:hover {
+  background:
+    #f0f0f2 !important;
+
+  color:
+    #1c1c1e !important;
+}
+
+html[data-theme="light"] .nav-item.active {
+  background:
+    rgba(
+      180,
+      138,
+      20,
+      0.12
+    ) !important;
+
+  color:
+    #8a6800 !important;
+}
+
+
+/* =====================================================
+   CARDS
+   ===================================================== */
+
+html[data-theme="light"] .summary-card,
+html[data-theme="light"] .panel,
+
+html[data-theme="light"] .membros-summary article,
+html[data-theme="light"] .membros-panel,
+
+html[data-theme="light"] .financeiro-resumo article,
+html[data-theme="light"] .financeiro-card,
+
+html[data-theme="light"] .inadimplencias-resumo article,
+html[data-theme="light"] .inadimplencias-card,
+
+html[data-theme="light"] .inventario-resumo article,
+html[data-theme="light"] .inventario-card,
+
+html[data-theme="light"] .relatorios-card,
+html[data-theme="light"] .relatorios-identificacao,
+html[data-theme="light"] .relatorios-resumo article,
+html[data-theme="light"] .relatorios-mini-cards article,
+
+html[data-theme="light"] .login-card {
+  background:
+    #ffffff !important;
+
+  border-color:
+    #dddddf !important;
+
+  color:
+    #1c1c1e !important;
+
+  box-shadow:
+    0 10px 35px
+    rgba(
+      0,
+      0,
+      0,
+      0.06
+    );
+}
+
+
+/* =====================================================
+   ACESSOS RÁPIDOS
+   ===================================================== */
+
+html[data-theme="light"] .quick-action {
+  background:
+    #f6f6f8 !important;
+
+  border-color:
+    #dddddf !important;
+
+  color:
+    #1c1c1e !important;
+}
+
+
+/* =====================================================
+   CAMPOS
+   ===================================================== */
+
+html[data-theme="light"] input,
+html[data-theme="light"] select,
+html[data-theme="light"] textarea {
+  background:
+    #f7f7f8 !important;
+
+  color:
+    #1c1c1e !important;
+
+  border-color:
+    #d1d1d6 !important;
+}
+
+html[data-theme="light"] input::placeholder,
+html[data-theme="light"] textarea::placeholder {
+  color:
+    #8e8e93 !important;
+}
+
+
+/* =====================================================
+   TABELAS
+   ===================================================== */
+
+html[data-theme="light"] table td {
+  color:
+    #5f5f64 !important;
+
+  border-color:
+    #e4e4e6 !important;
+}
+
+html[data-theme="light"] table th {
+  color:
+    #737378 !important;
+
+  border-color:
+    #dddddf !important;
+}
+
+html[data-theme="light"] table td strong {
+  color:
+    #1c1c1e !important;
+}
+
+
+/* =====================================================
+   TEXTOS
+   ===================================================== */
+
+html[data-theme="light"] h1,
+html[data-theme="light"] h2,
+html[data-theme="light"] h3,
+html[data-theme="light"] h4,
+
+html[data-theme="light"] .brand h1,
+
+html[data-theme="light"] .user-info strong,
+
+html[data-theme="light"] .atividade-conteudo strong {
+  color:
+    #1c1c1e !important;
+}
+
+html[data-theme="light"] .brand p,
+
+html[data-theme="light"] .welcome > div > p:last-child,
+
+html[data-theme="light"] .membros-description,
+
+html[data-theme="light"] .financeiro-subtitle,
+
+html[data-theme="light"] .inadimplencias-subtitle,
+
+html[data-theme="light"] .inventario-subtitle,
+
+html[data-theme="light"] .relatorios-subtitle,
+
+html[data-theme="light"] .atividade-conteudo span {
+  color:
+    #737378 !important;
+}
+
+
+/* =====================================================
+   BOTÕES SECUNDÁRIOS
+   ===================================================== */
+
+html[data-theme="light"] .logout-button,
+html[data-theme="light"] .voltar-dashboard,
+html[data-theme="light"] .financeiro-voltar,
+html[data-theme="light"] .inadimplencias-voltar,
+html[data-theme="light"] .inventario-voltar,
+html[data-theme="light"] .relatorios-voltar {
+  background:
+    #ffffff !important;
+
+  color:
+    #1c1c1e !important;
+
+  border-color:
+    #d1d1d6 !important;
+}
+
+
+/* =====================================================
+   MODAIS
+   ===================================================== */
+
+html[data-theme="light"] .membro-modal,
+html[data-theme="light"] .inventario-modal {
+  background:
+    #ffffff !important;
+
+  color:
+    #1c1c1e !important;
+
+  border-color:
+    #d1d1d6 !important;
+}
+
+
+/* =====================================================
+   LOGO
+   ===================================================== */
+
+html[data-theme="light"] .brand-symbol,
+html[data-theme="light"] .membros-logo {
+  background-color:
+    #ffffff !important;
+
+  border-color:
+    rgba(
+      150,
+      110,
+      0,
+      0.25
+    ) !important;
+}
+
+
+/* =====================================================
+   BOTÃO DE TEMA
+   ===================================================== */
+
+.theme-toggle {
+  width: 38px;
+  height: 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  padding: 0;
+
+  background:
+    #1c1c1e;
+
+  color:
+    #d4af37;
+
+  border:
+    1px solid #343438;
+
+  border-radius:
+    10px;
+
+  cursor:
+    pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.theme-toggle svg {
+  display: block;
+}
+
+.theme-toggle:hover {
+  transform:
+    translateY(-1px);
+
+  border-color:
+    rgba(
+      212,
+      175,
+      55,
+      0.7
+    );
+}
+
+html[data-theme="light"]
+.theme-toggle {
+  background:
+    #ffffff;
+
+  color:
+    #806600;
+
+  border-color:
+    #d1d1d6;
+}

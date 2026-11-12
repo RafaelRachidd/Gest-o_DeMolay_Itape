@@ -34,6 +34,9 @@ import {
 import AtividadesRecentes
   from "../components/AtividadesRecentes";
 
+import ThemeToggle
+  from "../components/ThemeToggle";
+
 import type {
   Usuario,
 } from "../types/Usuario";
@@ -187,6 +190,8 @@ function Dashboard({
         <div
           className="user-area"
         >
+          <ThemeToggle />
+
           <div
             className="user-info"
           >
