@@ -31,6 +31,9 @@ import type {
 
 import "./Usuarios.css";
 
+import MenuMobile
+  from "../components/MenuMobile";
+
 interface UsuariosProps {
   usuario: Usuario;
 }
@@ -606,6 +609,7 @@ function Usuarios({
     <main
       className="usuarios-page"
     >
+        <MenuMobile usuario={usuario} />
       <header
         className="usuarios-header"
       >

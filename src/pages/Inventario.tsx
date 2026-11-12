@@ -28,6 +28,9 @@ import type {
 
 import "./Inventario.css";
 
+import MenuMobile
+  from "../components/MenuMobile";
+
 interface InventarioProps {
   usuario: Usuario;
 }
@@ -481,6 +484,7 @@ const podeExcluir =
     <main
       className="inventario-page"
     >
+      <MenuMobile usuario={usuario} />
       <header
         className="inventario-header"
       >

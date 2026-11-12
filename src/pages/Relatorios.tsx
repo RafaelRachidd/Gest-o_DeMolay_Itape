@@ -46,6 +46,9 @@ import type {
 
 import "./Relatorios.css";
 
+import MenuMobile
+  from "../components/MenuMobile";
+
 interface RelatoriosProps {
   usuario: Usuario;
 }
@@ -484,6 +487,7 @@ function Relatorios({
     <main
       className="relatorios-page"
     >
+      <MenuMobile usuario={usuario} />
       <header
         className="relatorios-header"
       >

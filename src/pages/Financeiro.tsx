@@ -29,6 +29,9 @@ import type {
 
 import "./Financeiro.css";
 
+import MenuMobile
+  from "../components/MenuMobile";
+
 interface FinanceiroProps {
   usuario: Usuario;
 }
@@ -479,6 +482,8 @@ const podeExcluir =
     <main
       className="financeiro-page"
     >
+      <MenuMobile usuario={usuario} />
+      
       <header
         className="financeiro-header"
       >

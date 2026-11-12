@@ -1,0 +1,386 @@
+/* =====================================================
+   MENU MOBILE - CAPÍTULO DIGITAL
+   ===================================================== */
+
+.menu-mobile {
+  display: none;
+}
+
+
+/* =====================================================
+   CELULAR
+   ===================================================== */
+
+@media (max-width: 760px) {
+
+  .menu-mobile {
+    display: block;
+  }
+
+
+  /* BOTÃO DOS 3 RISQUINHOS */
+
+  .menu-mobile-trigger {
+    position: fixed;
+
+    top: 15px;
+    left: 14px;
+
+    z-index: 180;
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    padding: 0;
+
+    background: #1c1c1e;
+
+    border:
+      1px solid #343438;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    box-shadow:
+      0 5px 16px
+      rgba(
+        0,
+        0,
+        0,
+        0.18
+      );
+  }
+
+  .menu-mobile-trigger span {
+    width: 17px;
+    height: 1.5px;
+
+    display: block;
+
+    background: #d4af37;
+
+    border-radius: 10px;
+  }
+
+
+  /* FUNDO ESCURO */
+
+  .menu-mobile-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 190;
+
+    padding: 0;
+
+    background:
+      rgba(
+        0,
+        0,
+        0,
+        0.48
+      );
+
+    border: none;
+
+    backdrop-filter:
+      blur(2px);
+  }
+
+
+  /* MENU LATERAL */
+
+  .menu-mobile-drawer {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    z-index: 200;
+
+    width:
+      min(
+        290px,
+        84vw
+      );
+
+    display: flex;
+    flex-direction: column;
+
+    padding:
+      18px
+      14px;
+
+    background: #111113;
+
+    border-right:
+      1px solid #2c2c2e;
+
+    box-shadow:
+      18px 0 50px
+      rgba(
+        0,
+        0,
+        0,
+        0.32
+      );
+
+    transform:
+      translateX(-105%);
+
+    transition:
+      transform
+      0.25s ease;
+  }
+
+  .menu-mobile-drawer.aberto {
+    transform:
+      translateX(0);
+  }
+
+
+  /* CABEÇALHO */
+
+  .menu-mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding:
+      5px
+      6px
+      18px;
+
+    border-bottom:
+      1px solid #242426;
+  }
+
+  .menu-mobile-header > div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+  }
+
+  .menu-mobile-header strong {
+    color: #f5f5f7;
+
+    font-size: 14px;
+  }
+
+  .menu-mobile-header span {
+    color: #737378;
+
+    font-size: 10px;
+  }
+
+  .menu-mobile-fechar {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    background: #1c1c1e;
+    color: #a1a1a6;
+
+    border:
+      1px solid #343438;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+  }
+
+
+  /* LINKS */
+
+  .menu-mobile-nav {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+
+    margin-top: 15px;
+  }
+
+  .menu-mobile-link {
+    min-height: 44px;
+
+    display: flex;
+    align-items: center;
+
+    padding:
+      0
+      14px;
+
+    color: #a1a1a6;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+
+    text-decoration: none;
+
+    transition:
+      background 0.2s,
+      color 0.2s;
+  }
+
+  .menu-mobile-link:hover {
+    background: #1c1c1e;
+
+    color: #f5f5f7;
+  }
+
+  .menu-mobile-link.ativo {
+    background:
+      rgba(
+        212,
+        175,
+        55,
+        0.1
+      );
+
+    color: #d4af37;
+  }
+
+
+  /* USUÁRIO */
+
+  .menu-mobile-footer {
+    margin-top: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    padding:
+      16px
+      10px
+      5px;
+
+    border-top:
+      1px solid #242426;
+  }
+
+  .menu-mobile-footer strong {
+    color: #f5f5f7;
+
+    font-size: 11px;
+  }
+
+  .menu-mobile-footer span {
+    color: #d4af37;
+
+    font-size: 9px;
+
+    text-transform: capitalize;
+  }
+
+
+  /* =====================================================
+     TEMA CLARO
+     ===================================================== */
+
+  html[data-theme="light"]
+  .menu-mobile-trigger {
+    background: #ffffff;
+
+    border-color: #d1d1d6;
+  }
+
+  html[data-theme="light"]
+  .menu-mobile-drawer {
+    background: #ffffff;
+
+    border-color: #dddddf;
+  }
+
+  html[data-theme="light"]
+  .menu-mobile-header,
+  html[data-theme="light"]
+  .menu-mobile-footer {
+    border-color: #e4e4e6;
+  }
+
+  html[data-theme="light"]
+  .menu-mobile-header strong,
+  html[data-theme="light"]
+  .menu-mobile-footer strong {
+    color: #1c1c1e;
+  }
+
+  html[data-theme="light"]
+  .menu-mobile-fechar {
+    background: #f4f4f6;
+
+    color: #1c1c1e;
+
+    border-color: #d1d1d6;
+  }
+
+  html[data-theme="light"]
+  .menu-mobile-link {
+    color: #5f5f64;
+  }
+
+  html[data-theme="light"]
+  .menu-mobile-link:hover {
+    background: #f4f4f6;
+
+    color: #1c1c1e;
+  }
+
+  html[data-theme="light"]
+  .menu-mobile-link.ativo {
+    background:
+      rgba(
+        180,
+        138,
+        20,
+        0.12
+      );
+
+    color: #806600;
+  }
+}
+/* =====================================================
+   AJUSTE DE ESPAÇO PARA O MENU MOBILE
+   Evita que o botão fique sobre a logo
+   ===================================================== */
+
+@media (max-width: 760px) {
+
+  .membros-topbar,
+  .financeiro-header,
+  .inadimplencias-header,
+  .inventario-header,
+  .relatorios-header,
+  .usuarios-header {
+    padding-left: 58px !important;
+  }
+
+  .menu-mobile-trigger {
+    top: 16px;
+    left: 14px;
+  }
+}

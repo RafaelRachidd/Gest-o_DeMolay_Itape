@@ -27,6 +27,9 @@ import type {
 
 import "./Membros.css";
 
+import MenuMobile
+  from "../components/MenuMobile";
+
 interface MembrosProps {
   usuario: Usuario;
 }
@@ -456,6 +459,8 @@ const podeExcluir =
     <main
       className="membros-page"
     >
+      <MenuMobile usuario={usuario} />
+
       <header
         className="membros-topbar"
       >

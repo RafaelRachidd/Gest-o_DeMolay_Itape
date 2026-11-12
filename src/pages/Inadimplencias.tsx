@@ -34,6 +34,9 @@ import type {
 
 import "./Inadimplencias.css";
 
+import MenuMobile
+  from "../components/MenuMobile";
+
 interface InadimplenciasProps {
   usuario: Usuario;
 }
@@ -533,6 +536,7 @@ const podeExcluir =
 
   return (
     <main className="inadimplencias-page">
+      <MenuMobile usuario={usuario} />
       <header className="inadimplencias-header">
         <div>
           <p className="inadimplencias-eyebrow">
