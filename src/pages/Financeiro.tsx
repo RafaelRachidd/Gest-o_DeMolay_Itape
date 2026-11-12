@@ -171,14 +171,16 @@ function Financeiro({
     useState("");
 
   const podeMovimentar =
-    usuario.perfil ===
-      "admin" ||
-    usuario.perfil ===
-      "tesouraria";
+  usuario.perfil ===
+    "admin" ||
+  usuario.perfil ===
+    "tesouraria" ||
+  usuario.permissoes
+    ?.financeiro === true;
 
-  const podeExcluir =
-    usuario.perfil ===
-    "admin";
+const podeExcluir =
+  usuario.perfil ===
+  "admin";
 
   async function carregarDados() {
     try {

@@ -371,3 +371,28 @@ html[data-theme="light"]
   border-color:
     #d1d1d6;
 }
+/* =====================================================
+   DASHBOARD - CONTRASTE DOS INDICADORES NO MODO CLARO
+   ===================================================== */
+
+html[data-theme="light"]
+.summary-card strong {
+  color: #1c1c1e !important;
+}
+
+html[data-theme="light"]
+.summary-card .card-top > span {
+  color: #6e6e73 !important;
+}
+
+html[data-theme="light"]
+.summary-card small {
+  color: #737378 !important;
+}
+
+/* Mantém valores negativos destacados */
+
+html[data-theme="light"]
+.summary-card strong[style*="color"] {
+  color: #d93025 !important;
+}

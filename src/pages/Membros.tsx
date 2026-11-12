@@ -122,21 +122,23 @@ function Membros({
   ] =
     useState("");
 
-  const podeCadastrar =
-    usuario.perfil ===
-      "admin" ||
-    usuario.perfil ===
-      "secretaria";
+  const podeAlterarMembros =
+  usuario.perfil ===
+    "admin" ||
+  usuario.perfil ===
+    "secretaria" ||
+  usuario.permissoes
+    ?.membros === true;
 
-  const podeEditar =
-    usuario.perfil ===
-      "admin" ||
-    usuario.perfil ===
-      "secretaria";
+const podeCadastrar =
+  podeAlterarMembros;
 
-  const podeExcluir =
-    usuario.perfil ===
-    "admin";
+const podeEditar =
+  podeAlterarMembros;
+
+const podeExcluir =
+  usuario.perfil ===
+  "admin";
 
   async function carregarMembros() {
     try {

@@ -3,79 +3,200 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    function usuarioAtivo() {
-      return request.auth != null
+    function autenticado() {
+      return request.auth != null;
+    }
+
+    function existeUsuario() {
+      return autenticado()
         && exists(
           /databases/$(database)/documents/usuarios/$(request.auth.uid)
-        )
-        && get(
-          /databases/$(database)/documents/usuarios/$(request.auth.uid)
-        ).data.ativo == true;
+        );
+    }
+
+    function dadosUsuario() {
+      return get(
+        /databases/$(database)/documents/usuarios/$(request.auth.uid)
+      ).data;
+    }
+
+    function usuarioAtivo() {
+      return existeUsuario()
+        && dadosUsuario().ativo == true;
     }
 
     function perfil() {
-      return get(
-        /databases/$(database)/documents/usuarios/$(request.auth.uid)
-      ).data.perfil;
+      return dadosUsuario().perfil;
     }
+
+    function administrador() {
+      return usuarioAtivo()
+        && perfil() == "admin";
+    }
+
+
+    /* =====================================================
+       PERMISSÕES
+       ===================================================== */
+
+    function podeAlterarMembros() {
+      let dados = dadosUsuario();
+
+      return usuarioAtivo()
+        && (
+          dados.perfil == "admin"
+          || dados.perfil == "secretaria"
+          || (
+            "permissoes" in dados
+            && dados.permissoes.membros == true
+          )
+        );
+    }
+
+    function podeAlterarFinanceiro() {
+      let dados = dadosUsuario();
+
+      return usuarioAtivo()
+        && (
+          dados.perfil == "admin"
+          || dados.perfil == "tesouraria"
+          || (
+            "permissoes" in dados
+            && dados.permissoes.financeiro == true
+          )
+        );
+    }
+
+    function podeAlterarMensalidades() {
+      let dados = dadosUsuario();
+
+      return usuarioAtivo()
+        && (
+          dados.perfil == "admin"
+          || dados.perfil == "tesouraria"
+          || (
+            "permissoes" in dados
+            && dados.permissoes.mensalidades == true
+          )
+        );
+    }
+
+    function podeAlterarInventario() {
+      let dados = dadosUsuario();
+
+      return usuarioAtivo()
+        && (
+          dados.perfil == "admin"
+          || dados.perfil == "patrimonio"
+          || (
+            "permissoes" in dados
+            && dados.permissoes.inventario == true
+          )
+        );
+    }
+
+
+    /* =====================================================
+       USUÁRIOS
+       ===================================================== */
 
     match /usuarios/{userId} {
-      allow read: if request.auth != null
-                  && request.auth.uid == userId;
 
-      allow write: if false;
+      /*
+       * Cada usuário pode ler o próprio perfil.
+       * Isso também permite ao sistema descobrir
+       * quando uma conta está desativada.
+       *
+       * Administradores podem visualizar todos.
+       */
+      allow get: if autenticado()
+                 && (
+                   request.auth.uid == userId
+                   || administrador()
+                 );
+
+      allow list: if administrador();
+
+      /*
+       * Somente administradores podem cadastrar
+       * e modificar perfis.
+       */
+      allow create, update:
+        if administrador();
+
+      /*
+       * Não permitimos exclusão pelo sistema.
+       * O correto é desativar o usuário.
+       */
+      allow delete: if false;
     }
+
+
+    /* =====================================================
+       MEMBROS
+       ===================================================== */
 
     match /membros/{membroId} {
-      allow read: if usuarioAtivo();
 
-      allow create, update: if usuarioAtivo()
-                            && (
-                              perfil() == "admin"
-                              || perfil() == "secretaria"
-                            );
+      allow read:
+        if usuarioAtivo();
 
-      allow delete: if usuarioAtivo()
-                    && perfil() == "admin";
+      allow create, update:
+        if podeAlterarMembros();
+
+      allow delete:
+        if administrador();
     }
+
+
+    /* =====================================================
+       FINANCEIRO
+       ===================================================== */
 
     match /movimentacoesFinanceiras/{movimentacaoId} {
-      allow read: if usuarioAtivo();
 
-      allow create, update: if usuarioAtivo()
-                            && (
-                              perfil() == "admin"
-                              || perfil() == "tesouraria"
-                            );
+      allow read:
+        if usuarioAtivo();
 
-      allow delete: if usuarioAtivo()
-                    && perfil() == "admin";
+      allow create, update:
+        if podeAlterarFinanceiro();
+
+      allow delete:
+        if administrador();
     }
+
+
+    /* =====================================================
+       MENSALIDADES
+       ===================================================== */
 
     match /mensalidades/{mensalidadeId} {
-      allow read: if usuarioAtivo();
 
-      allow create, update: if usuarioAtivo()
-                            && (
-                              perfil() == "admin"
-                              || perfil() == "tesouraria"
-                            );
+      allow read:
+        if usuarioAtivo();
 
-      allow delete: if usuarioAtivo()
-                    && perfil() == "admin";
+      allow create, update:
+        if podeAlterarMensalidades();
+
+      allow delete:
+        if administrador();
     }
 
+
+    /* =====================================================
+       INVENTÁRIO
+       ===================================================== */
+
     match /inventario/{itemId} {
-      allow read: if usuarioAtivo();
 
-      allow create, update: if usuarioAtivo()
-                            && (
-                              perfil() == "admin"
-                              || perfil() == "patrimonio"
-                            );
+      allow read:
+        if usuarioAtivo();
 
-      allow delete: if usuarioAtivo()
-                    && perfil() == "admin";
+      allow create, update:
+        if podeAlterarInventario();
+
+      allow delete:
+        if administrador();
     }
   }
 }

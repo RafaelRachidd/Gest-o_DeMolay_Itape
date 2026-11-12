@@ -26,6 +26,7 @@ import Financeiro from "./pages/Financeiro";
 import Inadimplencias from "./pages/Inadimplencias";
 import Inventario from "./pages/Inventario";
 import Relatorios from "./pages/Relatorios";
+import Usuarios from "./pages/Usuarios";
 
 import {
   auth,
@@ -38,6 +39,7 @@ import type {
 
 import "./LogoInterna.css";
 import "./Tema.css";
+import "./Responsivo.css";
 
 function App() {
   const [
@@ -70,8 +72,13 @@ function App() {
           setErro("");
 
           if (!firebaseUser) {
-            setUsuario(null);
-            setCarregando(false);
+            setUsuario(
+              null
+            );
+
+            setCarregando(
+              false
+            );
 
             return;
           }
@@ -106,7 +113,9 @@ function App() {
             const dados =
               snapshot.data() as Usuario;
 
-            if (!dados.ativo) {
+            if (
+              !dados.ativo
+            ) {
               setErro(
                 "Este usuário está desativado."
               );
@@ -150,12 +159,23 @@ function App() {
     return (
       <div
         style={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "#09090b",
-          color: "#d4af37",
+          minHeight:
+            "100vh",
+
+          display:
+            "flex",
+
+          alignItems:
+            "center",
+
+          justifyContent:
+            "center",
+
+          background:
+            "#09090b",
+
+          color:
+            "#d4af37",
         }}
       >
         Carregando...
@@ -238,6 +258,25 @@ function App() {
               usuario
             }
           />
+        }
+      />
+
+      <Route
+        path="/usuarios"
+        element={
+          usuario.perfil ===
+          "admin" ? (
+            <Usuarios
+              usuario={
+                usuario
+              }
+            />
+          ) : (
+            <Navigate
+              to="/"
+              replace
+            />
+          )
         }
       />
 

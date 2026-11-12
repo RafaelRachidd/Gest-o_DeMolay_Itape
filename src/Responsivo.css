@@ -1,0 +1,775 @@
+/* =====================================================
+   CAPÍTULO DIGITAL
+   OTIMIZAÇÃO RESPONSIVA PARA CELULARES E TABLETS
+   ===================================================== */
+
+
+/* =====================================================
+   AJUSTES GERAIS
+   ===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  overflow-x: hidden;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+
+/* Evita o zoom automático do iPhone ao tocar em inputs */
+
+@media (max-width: 760px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+
+/* =====================================================
+   DASHBOARD
+   ===================================================== */
+
+@media (max-width: 760px) {
+
+  .dashboard {
+    padding-bottom: 82px;
+  }
+
+  .dashboard-header {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 90;
+
+    height: 68px;
+
+    padding:
+      0
+      14px;
+
+    gap: 10px;
+  }
+
+  .brand {
+    min-width: 0;
+
+    gap: 10px;
+  }
+
+  .brand-symbol {
+    width: 42px !important;
+    height: 42px !important;
+
+    border-radius: 11px !important;
+  }
+
+  .brand h1 {
+    font-size: 14px;
+
+    white-space: nowrap;
+  }
+
+  .brand p {
+    display: none;
+  }
+
+  .user-area {
+    gap: 8px;
+  }
+
+  .user-info {
+    display: none;
+  }
+
+  .theme-toggle {
+    width: 36px;
+    height: 36px;
+
+    border-radius: 9px;
+  }
+
+  .logout-button {
+    min-height: 36px;
+
+    padding:
+      7px
+      11px;
+
+    font-size: 11px;
+  }
+
+
+  /* =====================================================
+     MENU MOBILE
+     A antiga sidebar vira uma barra inferior.
+     ===================================================== */
+
+  .dashboard-layout {
+    display: block;
+
+    min-height:
+      calc(
+        100vh - 68px
+      );
+  }
+
+  .sidebar {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 100;
+
+    width: 100%;
+    height: 72px;
+
+    display: block;
+
+    padding: 7px 8px;
+
+    background:
+      rgba(
+        17,
+        17,
+        19,
+        0.97
+      );
+
+    border-top:
+      1px solid #2c2c2e;
+
+    border-right: none;
+
+    backdrop-filter:
+      blur(20px);
+  }
+
+  .sidebar nav {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+
+    gap: 4px;
+
+    overflow-x: auto;
+
+    scrollbar-width: none;
+
+    -webkit-overflow-scrolling:
+      touch;
+  }
+
+  .sidebar nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-item {
+    min-width: 82px;
+
+    flex: 0 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    padding:
+      7px
+      9px;
+
+    border-radius: 10px;
+
+    font-size: 9px;
+
+    text-align: center;
+  }
+
+  .nav-item span {
+    width: auto;
+
+    font-size: 15px;
+  }
+
+  .sidebar-footer {
+    display: none;
+  }
+
+  html[data-theme="light"]
+  .sidebar {
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        0.97
+      ) !important;
+
+    border-color:
+      #dddddf !important;
+  }
+
+
+  /* =====================================================
+     CONTEÚDO DO DASHBOARD
+     ===================================================== */
+
+  .dashboard-content {
+    width: 100%;
+
+    padding:
+      24px
+      16px
+      28px;
+  }
+
+  .welcome {
+    gap: 14px;
+  }
+
+  .welcome h2 {
+    font-size: 25px;
+  }
+
+  .welcome > div > p:last-child {
+    font-size: 12px;
+
+    line-height: 1.5;
+  }
+
+  .profile-badge {
+    padding:
+      6px
+      10px;
+
+    font-size: 9px;
+  }
+
+  .summary-grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+
+    gap: 10px;
+
+    margin-top: 24px;
+  }
+
+  .summary-card {
+    min-height: 135px;
+
+    padding: 16px;
+
+    border-radius: 14px;
+  }
+
+  .summary-card strong {
+    margin-top: 15px;
+
+    font-size: 24px;
+  }
+
+  .summary-card small {
+    font-size: 9px;
+
+    line-height: 1.4;
+  }
+
+  .card-top > span {
+    font-size: 10px;
+  }
+
+  .dashboard-columns {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+
+    margin-top: 12px;
+  }
+
+  .panel {
+    padding: 17px;
+
+    border-radius: 14px;
+  }
+
+  .quick-action {
+    grid-template-columns:
+      36px
+      minmax(0, 1fr)
+      auto;
+
+    padding: 11px;
+
+    gap: 10px;
+  }
+
+  .quick-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .quick-action strong {
+    font-size: 12px;
+  }
+
+  .quick-action span {
+    font-size: 9px;
+  }
+}
+
+
+/* Celulares menores */
+
+@media (max-width: 480px) {
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-card {
+    min-height: 120px;
+  }
+
+  .welcome {
+    flex-direction: column;
+  }
+
+  .profile-badge {
+    align-self: flex-start;
+  }
+}
+
+
+/* =====================================================
+   PÁGINAS INTERNAS
+   ===================================================== */
+
+@media (max-width: 700px) {
+
+  .membros-page,
+  .financeiro-page,
+  .inadimplencias-page,
+  .inventario-page,
+  .relatorios-page,
+  .usuarios-page {
+    width: 100%;
+
+    padding:
+      20px
+      14px !important;
+  }
+
+
+  /* =====================================================
+     HEADERS
+     ===================================================== */
+
+  .financeiro-header,
+  .inadimplencias-header,
+  .inventario-header,
+  .relatorios-header,
+  .usuarios-header {
+    width: 100%;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 16px;
+
+    margin-bottom: 22px;
+  }
+
+  .financeiro-header h1,
+  .inadimplencias-header h1,
+  .inventario-header h1,
+  .relatorios-header h1,
+  .usuarios-header h1 {
+    font-size: 27px;
+  }
+
+  .financeiro-voltar,
+  .inadimplencias-voltar,
+  .inventario-voltar,
+  .relatorios-voltar,
+  .usuarios-voltar,
+  .voltar-dashboard {
+    width: 100%;
+
+    min-height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+  }
+
+
+  /* =====================================================
+     MEMBROS
+     ===================================================== */
+
+  .membros-topbar {
+    min-height: auto;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 14px;
+
+    padding:
+      16px
+      14px;
+  }
+
+  .membros-user {
+    width: 100%;
+
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .membros-user > div {
+    display: none;
+  }
+
+  .membros-container {
+    width: 100%;
+
+    padding:
+      22px
+      0 !important;
+  }
+
+  .membros-title-row {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 16px;
+  }
+
+  .novo-membro-button {
+    width: 100%;
+
+    min-height: 46px;
+  }
+
+  .membros-summary {
+    grid-template-columns:
+      repeat(
+        2,
+        1fr
+      ) !important;
+
+    gap: 10px;
+  }
+
+  .membros-summary article {
+    min-height: 105px;
+
+    padding: 16px;
+  }
+
+  .membros-toolbar {
+    grid-template-columns:
+      1fr !important;
+
+    gap: 10px;
+  }
+
+
+  /* =====================================================
+     RESUMOS DAS OUTRAS PÁGINAS
+     ===================================================== */
+
+  .financeiro-resumo,
+  .inadimplencias-resumo,
+  .inventario-resumo,
+  .relatorios-resumo {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      ) !important;
+
+    gap: 10px;
+  }
+
+  .financeiro-resumo article,
+  .inadimplencias-resumo article,
+  .inventario-resumo article,
+  .relatorios-resumo article {
+    min-height: 105px;
+
+    padding: 15px;
+  }
+
+
+  /* =====================================================
+     CARDS
+     ===================================================== */
+
+  .financeiro-card,
+  .inadimplencias-card,
+  .inventario-card,
+  .relatorios-card,
+  .usuarios-card {
+    padding: 16px;
+
+    border-radius: 14px;
+  }
+
+
+  /* =====================================================
+     FORMULÁRIOS
+     ===================================================== */
+
+  .financeiro-form,
+  .inadimplencias-form,
+  .inventario-modal-grid,
+  .usuarios-form-grid,
+  .modal-grid {
+    grid-template-columns:
+      1fr !important;
+
+    gap: 13px !important;
+  }
+
+  .financeiro-descricao,
+  .usuarios-campo-largo,
+  .inventario-campo-largo {
+    grid-column: auto !important;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+
+    min-height: 44px;
+  }
+
+  textarea {
+    min-height: 95px;
+  }
+
+
+  /* =====================================================
+     FILTROS
+     ===================================================== */
+
+  .financeiro-filtros,
+  .inadimplencias-filtros,
+  .inventario-filtros,
+  .usuarios-toolbar {
+    grid-template-columns:
+      1fr !important;
+
+    width: 100%;
+
+    gap: 10px;
+  }
+
+
+  /* =====================================================
+     TABELAS
+     ===================================================== */
+
+  .membros-table-wrapper,
+  .financeiro-tabela-wrapper,
+  .inadimplencias-tabela-wrapper,
+  .inventario-tabela-wrapper,
+  .relatorios-tabela-wrapper,
+  .usuarios-tabela-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+
+    -webkit-overflow-scrolling:
+      touch;
+
+    scrollbar-width: thin;
+  }
+
+  .membros-table,
+  .financeiro-tabela,
+  .inadimplencias-tabela,
+  .inventario-tabela,
+  .relatorios-tabela,
+  .usuarios-tabela {
+    font-size: 11px;
+  }
+
+
+  /* =====================================================
+     MODAIS
+     ===================================================== */
+
+  .modal-overlay,
+  .inventario-modal-overlay,
+  .usuarios-modal-overlay {
+    align-items: flex-end;
+
+    padding: 0;
+  }
+
+  .membro-modal,
+  .inventario-modal,
+  .usuarios-modal {
+    width: 100%;
+
+    max-width: none;
+
+    max-height: 92vh;
+
+    margin: 0;
+
+    padding:
+      22px
+      16px
+      28px;
+
+    border-radius:
+      20px
+      20px
+      0
+      0;
+  }
+
+  .modal-actions,
+  .inventario-modal-actions,
+  .usuarios-modal-actions {
+    flex-direction: column-reverse;
+
+    gap: 9px;
+  }
+
+  .cancelar-button,
+  .salvar-button,
+  .inventario-cancelar,
+  .inventario-salvar,
+  .usuarios-cancelar,
+  .usuarios-salvar {
+    width: 100%;
+
+    min-height: 46px;
+  }
+
+
+  /* =====================================================
+     USUÁRIOS
+     ===================================================== */
+
+  .usuarios-brand {
+    align-items: flex-start;
+  }
+
+  .usuarios-intro {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .novo-usuario {
+    width: 100%;
+
+    min-height: 46px;
+  }
+
+  .permissoes-grid {
+    grid-template-columns:
+      1fr !important;
+  }
+
+  .permissoes-header {
+    flex-direction: column;
+  }
+
+
+  /* =====================================================
+     RELATÓRIOS
+     ===================================================== */
+
+  .relatorios-header-actions {
+    width: 100%;
+
+    flex-direction: column;
+  }
+
+  .relatorios-imprimir {
+    width: 100%;
+
+    min-height: 44px;
+  }
+
+  .relatorios-identificacao {
+    flex-direction: column;
+  }
+
+  .relatorios-periodo {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+}
+
+
+/* =====================================================
+   CELULARES MUITO PEQUENOS
+   ===================================================== */
+
+@media (max-width: 450px) {
+
+  .membros-summary,
+  .financeiro-resumo,
+  .inadimplencias-resumo,
+  .inventario-resumo,
+  .relatorios-resumo {
+    grid-template-columns:
+      1fr !important;
+  }
+
+  .usuarios-page,
+  .membros-page,
+  .financeiro-page,
+  .inadimplencias-page,
+  .inventario-page,
+  .relatorios-page {
+    padding:
+      16px
+      12px !important;
+  }
+}

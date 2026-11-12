@@ -122,15 +122,17 @@ function Inventario({
   ] =
     useState("");
 
-  const podeGerenciar =
-    usuario.perfil ===
-      "admin" ||
-    usuario.perfil ===
-      "patrimonio";
+ const podeGerenciar =
+  usuario.perfil ===
+    "admin" ||
+  usuario.perfil ===
+    "patrimonio" ||
+  usuario.permissoes
+    ?.inventario === true;
 
-  const podeExcluir =
-    usuario.perfil ===
-    "admin";
+const podeExcluir =
+  usuario.perfil ===
+  "admin";
 
   async function carregarItens() {
     try {

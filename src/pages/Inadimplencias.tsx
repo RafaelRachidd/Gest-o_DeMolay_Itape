@@ -152,15 +152,17 @@ function Inadimplencias({
   ] =
     useState("");
 
-  const podeGerenciar =
-    usuario.perfil ===
-      "admin" ||
-    usuario.perfil ===
-      "tesouraria";
+const podeGerenciar =
+  usuario.perfil ===
+    "admin" ||
+  usuario.perfil ===
+    "tesouraria" ||
+  usuario.permissoes
+    ?.mensalidades === true;
 
-  const podeExcluir =
-    usuario.perfil ===
-    "admin";
+const podeExcluir =
+  usuario.perfil ===
+  "admin";
 
   async function carregarDados() {
     try {
